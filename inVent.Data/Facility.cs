@@ -18,11 +18,13 @@ namespace inVent.Data
         public string Name { get; set; }
         [Required]
         public FacilityType Type { get; set; }
-        [Required]
+        
         public List<Item> Items { get; set; }
 
         public List<Sale> Sales { get; set; }
-        public DateTimeOffset Opened { get; set; }
+
+        [Required]
+        public DateTimeOffset Opened { get; set;}
         public DateTimeOffset? Closed { get; set; }
 
         public Facility()

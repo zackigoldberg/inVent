@@ -1,4 +1,6 @@
-﻿using inVent.Services;
+﻿using inVent.Data;
+using inVent.Models.FacilityModels;
+using inVent.Services;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -8,6 +10,7 @@ using System.Web.Mvc;
 
 namespace inVent.Web.Controllers
 {
+    [Authorize]
     public class FacilityController : Controller
     {
         // GET: Facility
@@ -37,18 +40,23 @@ namespace inVent.Web.Controllers
 
         // POST: Facility/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(FacilityCreate model)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            if (!ModelState.IsValid) return View(model);
 
-                return RedirectToAction("Index");
-            }
-            catch
+            var service = CreateFacilityService();
+
+            if (service.CreateFacility(model))
             {
-                return View();
-            }
+                TempData["SaveResult"] = "Your note was created";
+                return RedirectToAction("Index");
+            };
+
+            ModelState.AddModelError("", "Note could not be created");
+
+            return View(model);
+
         }
 
         // GET: Facility/Edit/5
