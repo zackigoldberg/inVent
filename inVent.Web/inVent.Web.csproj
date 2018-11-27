@@ -8,12 +8,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{91F62BEA-BDA1-42F6-AE5C-2A417F18E924}</ProjectGuid>
+    <ProjectGuid>{049E9C6E-86C9-4237-8E1E-0BFB21D19F8A}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>inVent</RootNamespace>
-    <AssemblyName>inVent</AssemblyName>
+    <RootNamespace>inVent.Web</RootNamespace>
+    <AssemblyName>inVent.Web</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -174,13 +174,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FacilityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -244,6 +244,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Facility\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -257,6 +258,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\inVent.Data\inVent.Data.csproj">
+      <Project>{2879c41c-3d15-43fb-af49-08b78094f0c0}</Project>
+      <Name>inVent.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\inVent.Models\inVent.Models.csproj">
+      <Project>{04ea4f65-d1c4-490e-aac7-5177ffc13c66}</Project>
+      <Name>inVent.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\inVent.Services\inVent.Services.csproj">
+      <Project>{28f02f2e-eef8-4035-96f2-ab32cb0fc91a}</Project>
+      <Name>inVent.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -274,9 +289,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>55315</DevelopmentServerPort>
+          <DevelopmentServerPort>57313</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55315/</IISUrl>
+          <IISUrl>http://localhost:57313/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
