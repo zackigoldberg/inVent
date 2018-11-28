@@ -45,7 +45,7 @@ namespace inVent.Web.Models
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Sale> Sales { get; set; }
-
+        public DbSet<Inventory> Inventories { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder

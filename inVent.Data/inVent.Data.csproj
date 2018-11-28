@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Facility.cs" />
     <Compile Include="IdentityModels.cs" />
+    <Compile Include="Inventory.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="keyAttribute.cs" />
     <Compile Include="Migrations\201811272054578_InitialCreate.cs" />
@@ -65,6 +66,10 @@
     <Compile Include="Migrations\201811281845441_Donu.cs" />
     <Compile Include="Migrations\201811281845441_Donu.Designer.cs">
       <DependentUpon>201811281845441_Donu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811281940276_Added Salesman Property.cs" />
+    <Compile Include="Migrations\201811281940276_Added Salesman Property.Designer.cs">
+      <DependentUpon>201811281940276_Added Salesman Property.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811281845441_Donu.resx">
       <DependentUpon>201811281845441_Donu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811281940276_Added Salesman Property.resx">
+      <DependentUpon>201811281940276_Added Salesman Property.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

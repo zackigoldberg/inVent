@@ -58,6 +58,9 @@
     <Compile Include="FacilityModels\FacilityDetail.cs" />
     <Compile Include="FacilityModels\FacilityEdit.cs" />
     <Compile Include="FacilityModels\FacilityListItem.cs" />
+    <Compile Include="InventoryModels\InventoryAdvancedListItem.cs" />
+    <Compile Include="InventoryModels\InventoryCreate.cs" />
+    <Compile Include="InventoryModels\InventoryListItem.cs" />
     <Compile Include="ItemModels\ItemCreate.cs" />
     <Compile Include="ItemModels\ItemDetail.cs" />
     <Compile Include="ItemModels\ItemEdit.cs" />

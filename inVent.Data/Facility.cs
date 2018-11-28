@@ -10,7 +10,7 @@ namespace inVent.Data
     public enum FacilityType
     {
         [Display(Name = "Production")]
-        Production = 0,
+        Production = 1,
         [Display(Name = "Distribution")]
         Distribution,
         [Display(Name = "Retail")]
@@ -28,11 +28,6 @@ namespace inVent.Data
         public string Name { get; set; }
         [Required]
         public FacilityType Type { get; set; }
-        
-        public List<Item> Items { get; set; }
-
-        public List<Sale> Sales { get; set; }
-
         [Required]
         public DateTimeOffset Opened { get; set;}
         public DateTimeOffset? Closed { get; set; }
