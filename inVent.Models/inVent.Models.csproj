@@ -63,6 +63,10 @@
     <Compile Include="ItemModels\ItemEdit.cs" />
     <Compile Include="ItemModels\ItemListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaleModels\SaleCreate.cs" />
+    <Compile Include="SaleModels\SaleDetail.cs" />
+    <Compile Include="SaleModels\SaleEdit.cs" />
+    <Compile Include="SaleModels\SaleListItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\inVent.Data\inVent.Data.csproj">
@@ -74,8 +78,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SaleModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

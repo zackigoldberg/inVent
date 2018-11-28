@@ -7,7 +7,17 @@ using System.Threading.Tasks;
 
 namespace inVent.Data
 {
-    public enum FacilityType {Production=1, Distribution, Retail, Partner}
+    public enum FacilityType
+    {
+        [Display(Name = "Production")]
+        Production = 0,
+        [Display(Name = "Distribution")]
+        Distribution,
+        [Display(Name = "Retail")]
+        Retail,
+        [Display(Name = "Partner")]
+        Partner
+    }
     public class Facility
     {
         [Key]

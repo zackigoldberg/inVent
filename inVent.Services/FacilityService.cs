@@ -33,8 +33,7 @@ namespace inVent.Services
                     Name = model.Name,
                     Type = model.Type,
                     Items = itemList,
-                    Opened = DateTimeOffset.Now,
-                    FacilityId = model.FacilityId
+                    Opened = DateTimeOffset.Now
                 };
             using (var ctx = new ApplicationDbContext())
             {

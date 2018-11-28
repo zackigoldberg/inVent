@@ -69,10 +69,18 @@ namespace inVent.Web.Controllers
         public ActionResult Edit(int id)
         {
             var service = CreateFacilityService();
-            var model = service.GetFacilityById(id);
+            var detail = service.GetFacilityById(id);
+            var model =
+                new FacilityEdit
+                {
+                    FacilityId = detail.FacilityId,
+                    Name = detail.Name,
+                    Type = detail.Type,
+                    Items = detail.Items,
+                    Sales = detail.Sales
+                };
             return View(model);
         }
-
         // POST: Facility/Edit/5
         [Authorize]
         [HttpPost]
@@ -81,16 +89,22 @@ namespace inVent.Web.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
+            if (model.FacilityId != id)
+            {
+                ModelState.AddModelError("", "Id Mismatch");
+                return View(model);
+            }
+
+
             var service = CreateFacilityService();
 
             if (service.UpdateFacility(model))
             {
-                TempData["SaveResult"] = "Facility was successfully Edited.";
+                TempData["SaveResult"] = "Facility was updated.";
                 return RedirectToAction("Index");
-            };
+            }
 
-            ModelState.AddModelError("", "Facility could not be edited at this time.");
-
+            ModelState.AddModelError("", "Facility could not be updated.");
             return View(model);
         }
 
