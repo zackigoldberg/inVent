@@ -55,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FacilityModels\FacilityCreate.cs" />
+    <Compile Include="FacilityModels\FacilityDetail.cs" />
+    <Compile Include="FacilityModels\FacilityEdit.cs" />
     <Compile Include="FacilityModels\FacilityListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

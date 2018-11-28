@@ -18,18 +18,26 @@ namespace inVent.Services
             _userId = userId;
         }
 
-        public bool CreateFacility(FacilityCreate model) 
+        public bool CreateFacility(FacilityCreate model)
         {
+            List<Item> itemList = new List<Item>();
+            //returns the current master list of items that could be at the facility
+            using (var ctx = new ApplicationDbContext())
+            {
+                itemList = ctx.Items.ToList();
+            }
             var entity =
                 new Facility()
                 {
                     OwnerId = _userId,
                     Name = model.Name,
                     Type = model.Type,
+                    Items = itemList,
                     Opened = DateTimeOffset.Now,
                     FacilityId = model.FacilityId
                 };
-            using (var ctx = new ApplicationDbContext()){
+            using (var ctx = new ApplicationDbContext())
+            {
                 ctx.Facilities.Add(entity);
                 return ctx.SaveChanges() == 1;
             }
@@ -42,7 +50,7 @@ namespace inVent.Services
                 var query =
                     ctx
                     .Facilities
-                    .Where(e => e.OwnerId == _userId)
+                    .Where(e => e.Closed == null)
                     .Select(
                         e =>
                         new FacilityListItem
@@ -57,6 +65,58 @@ namespace inVent.Services
                         }
                             );
                 return query.ToArray();
+            }
+        }
+
+        public FacilityDetail GetFacilityById(int facilityId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = 
+                    ctx
+                    .Facilities
+                    .Single(e => e.FacilityId == facilityId);
+                return
+                    new FacilityDetail
+                    {
+                        FacilityId = entity.FacilityId,
+                        Name = entity.Name,
+                        Type = entity.Type,
+                        Items = entity.Items,
+                        Sales = entity.Sales,
+                        Opened = entity.Opened,
+                        Closed = entity.Closed
+                    };
+
+            }
+        }
+        public bool UpdateFacility(FacilityEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Facilities
+                    .Single(e => e.FacilityId == model.FacilityId && e.OwnerId == _userId);
+                entity.Name = model.Name;
+                entity.Items = model.Items;
+                entity.Sales = model.Sales;
+                entity.Type = model.Type;
+
+                return ctx.SaveChanges() == 1;
+                            } 
+        }
+        public bool CloseFacility(int FacilityId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Facilities
+                    .Single(e => e.FacilityId == FacilityId && e.OwnerId == _userId);
+                    entity.Closed = DateTimeOffset.Now;
+
+                return ctx.SaveChanges() == 1;
             }
         }
     }

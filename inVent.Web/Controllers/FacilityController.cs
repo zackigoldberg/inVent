@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace inVent.Web.Controllers
 {
-    [Authorize]
+
     public class FacilityController : Controller
     {
         // GET: Facility
@@ -29,16 +29,21 @@ namespace inVent.Web.Controllers
         // GET: Facility/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var service = CreateFacilityService();
+            var model = service.GetFacilityById(id);
+            return View(model);
         }
 
+
         // GET: Facility/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Facility/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(FacilityCreate model)
@@ -49,40 +54,49 @@ namespace inVent.Web.Controllers
 
             if (service.CreateFacility(model))
             {
-                TempData["SaveResult"] = "Your note was created";
+                TempData["SaveResult"] = "Facility was created.";
                 return RedirectToAction("Index");
             };
 
-            ModelState.AddModelError("", "Note could not be created");
+            ModelState.AddModelError("", "Facility could not be created.");
 
             return View(model);
 
         }
 
         // GET: Facility/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
-            return View();
+            var service = CreateFacilityService();
+            var model = service.GetFacilityById(id);
+            return View(model);
         }
 
         // POST: Facility/Edit/5
+        [Authorize]
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, FacilityEdit model)
         {
-            try
-            {
-                // TODO: Add update logic here
+            if (!ModelState.IsValid) return View(model);
 
-                return RedirectToAction("Index");
-            }
-            catch
+            var service = CreateFacilityService();
+
+            if (service.UpdateFacility(model))
             {
-                return View();
-            }
+                TempData["SaveResult"] = "Facility was successfully Edited.";
+                return RedirectToAction("Index");
+            };
+
+            ModelState.AddModelError("", "Facility could not be edited at this time.");
+
+            return View(model);
         }
 
-        // GET: Facility/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Facility/Closure/5
+
+        public ActionResult Close(int id)
         {
             return View();
         }

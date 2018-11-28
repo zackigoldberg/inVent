@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Opened)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Closed)
+            @Html.DisplayNameFor(model => model.Items)
         </th>
         <th></th>
     </tr>
@@ -38,7 +38,13 @@
             @Html.DisplayFor(modelItem => item.Opened)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Closed)
+            @foreach (var i in item.Items)
+            {
+                @Html.DisplayText("Item Name:")
+                @Html.DisplayFor(modelItem => i.Name);
+                @Html.DisplayText("Quantity:")
+                @Html.DisplayFor(modelItem => i.Stock);
+            }
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
