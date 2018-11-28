@@ -19,17 +19,13 @@ namespace inVent.Web.Controllers
             var model = service.GetItems();
             return View(model);
         }
-        private ItemService CreateItemService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new ItemService(userId);
-            return service;
-        }
+
         //Get: Item/Create
         public ActionResult Create()
         {
             return View();
         }
+
         //Post: Item/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -48,6 +44,7 @@ namespace inVent.Web.Controllers
 
             return View(model);
         }
+
         //Get: Item/Display
         public ActionResult Display(int itemNumber)
         {
@@ -55,6 +52,24 @@ namespace inVent.Web.Controllers
             var model = service.GetItemByNumber(itemNumber);
             return View(model);
         }
+
+        //Get: Item/Edit
+        public ActionResult Edit(int itemNumber)
+        {
+            var service = CreateItemService();
+            var detail = service.GetItemByNumber(itemNumber);
+            var model =
+                new ItemEdit
+                {
+                    ItemNumber = detail.ItemNumber,
+                    Name = detail.Name,
+                    Description = detail.Description,
+                    Price = detail.Price,
+                    Stock = detail.Stock
+                };
+            return View(model);
+        }
+
         //Post: Item/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -79,6 +94,7 @@ namespace inVent.Web.Controllers
 
             return View(model);
         }
+
         //Get: Item/Delete
         public ActionResult Delete(int itemNumber)
         {
@@ -87,5 +103,24 @@ namespace inVent.Web.Controllers
             return View(model);
         }
 
+        //Post: Item/Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSubmit(int id)
+        {
+            var service = CreateItemService();
+
+            service.DeleteItem(id);
+
+            TempData["Save Result"] = "Item was deleted successfully!";
+
+            return RedirectToAction("Index");
+        }
+        private ItemService CreateItemService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var service = new ItemService(userId);
+            return service;
+        }
     }
 }
