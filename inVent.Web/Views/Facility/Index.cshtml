@@ -44,13 +44,7 @@
             @Html.DisplayFor(modelItem => item.Opened)
         </td>
         <td>
-            @foreach (var i in item.Items)
-            {
-                @Html.DisplayText("Item Name:")
-                @Html.DisplayFor(modelItem => i.Name);
-                @Html.DisplayText("Quantity:")
-                @Html.DisplayFor(modelItem => i.Stock);
-            }
+            @HtmlActionLink("See Items", "Details", "Inventory", new {  id = item.FacilityId})
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new {  id=item.FacilityId  }) |

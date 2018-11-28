@@ -25,9 +25,7 @@ namespace inVent.Services
                 {
                     UserId = _userId,
                     Name = model.Name,
-                    Stock = model.Stock,
                     Description = model.Description,
-                    Price = model.Price
                 };
 
             using (var ctx = new ApplicationDbContext())
@@ -52,9 +50,7 @@ namespace inVent.Services
                           ItemNumber = e.ItemNumber,
                           Name = e.Name,
                           Description = e.Description,
-                          Price = e.Price,
-                          Stock = e.Stock
-
+                          PackSize = e.PackSize
                       }
                       );
                 return query.ToArray();
@@ -75,8 +71,7 @@ namespace inVent.Services
                         ItemNumber = entity.ItemNumber,
                         Name = entity.Name,
                         Description = entity.Description,
-                        Price = entity.Price,
-                        Stock = entity.Stock
+                        PackSize = entity.PackSize
                     };
             }
         }
@@ -91,8 +86,7 @@ namespace inVent.Services
                     .Single(e => e.ItemNumber == model.ItemNumber);
                 entity.Name = model.Name;
                 entity.Description = model.Description;
-                entity.Stock = model.Stock;
-                entity.Price = model.Price;
+                entity.PackSize = model.PackSize;
 
                 return ctx.SaveChanges() == 1;
             }

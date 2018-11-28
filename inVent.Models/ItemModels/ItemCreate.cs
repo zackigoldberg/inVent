@@ -16,11 +16,7 @@ namespace inVent.Models.ItemModels
 
         [MaxLength(240, ErrorMessage = "Keep it short and sweet")]
         public string Description { get; set; }
-        
-        [Range(0,999999, ErrorMessage = "Items must have a non-negative value")]
-        public decimal Price { get; set; }
-
-        [Range(0, 9999999, ErrorMessage = "Invalid stock range, cannot go to negative stock.")]
-        public int Stock { get; set; }
+        [Display(Name = "Pack Size:")]
+        public string PackSize { get; set; }
     }
 }

@@ -9,9 +9,9 @@ namespace inVent.Models.InventoryModels
     public class InventoryAdvancedListItem
     {
         public int FacilityId { get; set; }
-        public object ItemId { get; set; }
+        public int ItemId { get; set; }
         public string ItemName { get; set; }
         public string Description { get; set; }
-        public object Quantity { get; set; }
+        public int Quantity { get; set; }
     }
 }

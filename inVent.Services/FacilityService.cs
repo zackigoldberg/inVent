@@ -32,7 +32,6 @@ namespace inVent.Services
                     OwnerId = _userId,
                     Name = model.Name,
                     Type = model.Type,
-                    Items = itemList,
                     Opened = DateTimeOffset.Now
                 };
             using (var ctx = new ApplicationDbContext())
@@ -57,8 +56,6 @@ namespace inVent.Services
                             FacilityId = e.FacilityId,
                             Name = e.Name,
                             Type = e.Type,
-                            Items = e.Items,
-                            Sales = e.Sales,
                             Opened = e.Opened,
                             Closed = e.Closed
                         }
@@ -81,8 +78,6 @@ namespace inVent.Services
                         FacilityId = entity.FacilityId,
                         Name = entity.Name,
                         Type = entity.Type,
-                        Items = entity.Items,
-                        Sales = entity.Sales,
                         Opened = entity.Opened,
                         Closed = entity.Closed
                     };
@@ -98,8 +93,6 @@ namespace inVent.Services
                     .Facilities
                     .Single(e => e.FacilityId == model.FacilityId && e.OwnerId == _userId);
                 entity.Name = model.Name;
-                entity.Items = model.Items;
-                entity.Sales = model.Sales;
                 entity.Type = model.Type;
 
                 return ctx.SaveChanges() == 1;

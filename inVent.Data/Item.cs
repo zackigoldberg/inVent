@@ -15,21 +15,8 @@ namespace inVent.Data
         public int ItemNumber { get; set; }
         [Required]
         public string Name { get; set; }
-
         public string Description { get; set; }
-
-        public int Stock { get; set; }
-
-        public decimal Price { get; set; }
-
-        public Item(int additionalStock)
-        {
-            Stock += additionalStock;
-        }
-
-        public Item()
-        {
-
-        }
+        [Display(Name = "Pack Size:")]
+        public string PackSize { get; set; }
     }
 }

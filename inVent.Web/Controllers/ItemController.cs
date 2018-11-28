@@ -64,8 +64,7 @@ namespace inVent.Web.Controllers
                     ItemNumber = detail.ItemNumber,
                     Name = detail.Name,
                     Description = detail.Description,
-                    Price = detail.Price,
-                    Stock = detail.Stock
+                    PackSize = detail.PackSize
                 };
             return View(model);
         }
