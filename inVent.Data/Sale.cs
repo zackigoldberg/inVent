@@ -10,7 +10,7 @@ namespace inVent.Data
     {
         public Guid UserId { get; set; }
         public int SaleId { get; set; }
-        public decimal Total { get; set; }
+        public decimal SaleTotal { get; set; }
         public Item SoldItem { get; set; }
         public int QuantitySold { get; set; }
     }

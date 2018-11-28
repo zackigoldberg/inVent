@@ -13,6 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "inVent.Models", "inVent.Mod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "inVent.Contracts", "inVent.Contracts\inVent.Contracts.csproj", "{AE08CC72-397D-48D3-82C3-56C5ED93CC72}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FF184A49-22CB-4C7F-8513-CE13BDECCA72}"
+	ProjectSection(SolutionItems) = preProject
+		Brainstorming.txt = Brainstorming.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

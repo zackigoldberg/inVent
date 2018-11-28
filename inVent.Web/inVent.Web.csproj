@@ -176,7 +176,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FacilityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -246,6 +248,7 @@
     <Content Include="Views\Facility\Index.cshtml" />
     <Content Include="Views\Facility\Details.cshtml" />
     <Content Include="Views\Facility\Edit.cshtml" />
+    <Content Include="Views\Item\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

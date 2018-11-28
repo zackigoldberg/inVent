@@ -58,6 +58,10 @@
     <Compile Include="FacilityModels\FacilityDetail.cs" />
     <Compile Include="FacilityModels\FacilityEdit.cs" />
     <Compile Include="FacilityModels\FacilityListItem.cs" />
+    <Compile Include="ItemModels\ItemCreate.cs" />
+    <Compile Include="ItemModels\ItemDetail.cs" />
+    <Compile Include="ItemModels\ItemEdit.cs" />
+    <Compile Include="ItemModels\ItemListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,7 +75,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ItemModels\" />
     <Folder Include="SaleModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

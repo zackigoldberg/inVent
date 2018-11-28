@@ -1,0 +1,30 @@
+What should inVent keep track of to start with?
+-Donuts
+-Chocolate
+-Computer Parts
+-Space Distribution
+-Space Distribution of Donuts
+-Space Bakery Logistics
+
+
+
+
+List the Cross functionality items you are thinking about so you don't go crazy:
+1. In Facility Edit, make a way to add Items to the Database which will effect the current state.
+2. Create a new model and view for Adding Sales to Facilities, which tracks by facility and in the Sales database.
+		2.a. When a new sale is entered it needs to effect the inventory at the facility that sold the product and effect the available item quantity at that facility.
+3. Whenever a new Item is added to the Item Datatable it needs to update all the facilities to reflect the additional item.
+4. Need a page for transferring inventory from one facility to another.
+5. Need a page for Listing all available individual instances of an item at each facility to get a total available for that item.
+6. Multiple levels of access:
+-Sales User->Can effect sales only but see data
+--Sales Manager User -> Can effect sales and move products to different facilities and sees data
+--Production User -> Can create new products, and move products to different facilities and sees data
+---Emon Lusk User -> Can do everything.
+
+
+
+
+
+
+
