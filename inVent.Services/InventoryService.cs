@@ -59,34 +59,36 @@ namespace inVent.Services
             using (var ctx = new ApplicationDbContext())
             {
                 Dictionary<int, int> itemNumbers = new Dictionary<int, int>();
-                List<InventoryAdvancedListItem> fakeList = new List<InventoryAdvancedListItem>();
-
+                List<InventoryAdvancedListItem> updateList = new List<InventoryAdvancedListItem>();
                 foreach (Inventory i in ctx.Inventories)
                 {
                     if (i.FacilityId == facilityId)
                     {
-                        itemNumbers.Add(i.ItemId, i.Quantity);
+                        if (!itemNumbers.ContainsKey(i.ItemId))
+                        {
+                            itemNumbers.Add(i.ItemId, i.Quantity);
+                        }
                     }
                 }
                 foreach (var kvp in itemNumbers)
                 {
                     var query = ctx
-                        .Items
-                        .Where(e => e.ItemNumber == kvp.Key)
-                        .Select(
-                        e =>
-                        new InventoryAdvancedListItem
-                        {
-                            FacilityId = facilityId,
-                            ItemId = kvp.Key,
-                            ItemName = e.Name,
-                            Description = e.Description,
-                            Quantity = kvp.Value
-                        }
-                        );
-                    return query.ToArray();
+                            .Items
+                            .Where(e => e.ItemNumber == kvp.Key)
+                            .Select(
+                            e =>
+                            new InventoryAdvancedListItem
+                            {
+                                FacilityId = facilityId,
+                                ItemId = kvp.Key,
+                                ItemName = e.Name,
+                                Description = e.Description,
+                                Quantity = kvp.Value
+                            }
+                            );
+                    updateList.Add(query.FirstOrDefault());
                 }
-                return fakeList.ToArray();
+                return updateList.ToArray();
             }
         }
     }

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace inVent.Web.Controllers
 {
+    [Authorize]
     public class InventoryController : Controller
     {
         // GET: Inventory
@@ -23,7 +24,7 @@ namespace inVent.Web.Controllers
             var service = new InventoryService(Guid.Parse(User.Identity.GetUserId()));
             return service;
         }
-        // GET: Inventory/Details/5
+        // GET: Inventory/Details/
         public ActionResult Details(int id)
         {
             var service = CreateInventoryService();

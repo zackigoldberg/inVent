@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace inVent.Web.Controllers
 {
-
+    [Authorize]
     public class FacilityController : Controller
     {
         // GET: Facility
@@ -36,14 +36,14 @@ namespace inVent.Web.Controllers
 
 
         // GET: Facility/Create
-        [Authorize]
+       
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Facility/Create
-        [Authorize]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(FacilityCreate model)
@@ -65,7 +65,7 @@ namespace inVent.Web.Controllers
         }
 
         // GET: Facility/Edit/5
-        [Authorize]
+        
         public ActionResult Edit(int id)
         {
             var service = CreateFacilityService();
@@ -82,7 +82,7 @@ namespace inVent.Web.Controllers
             return View(model);
         }
         // POST: Facility/Edit/5
-        [Authorize]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, FacilityEdit model)

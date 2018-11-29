@@ -23,9 +23,9 @@ namespace inVent.Services
             var entity =
                 new Item()
                 {
-                    UserId = _userId,
                     Name = model.Name,
                     Description = model.Description,
+                    PackSize = model.PackSize
                 };
 
             using (var ctx = new ApplicationDbContext())

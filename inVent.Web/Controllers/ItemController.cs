@@ -38,6 +38,7 @@ namespace inVent.Web.Controllers
             if (service.CreateItem(model))
             {
                 TempData["Save Result"] = "Your item was created!";
+                return RedirectToAction("Index");
             }
 
             ModelState.AddModelError("", "Item was not created.");

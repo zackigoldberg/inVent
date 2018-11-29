@@ -44,11 +44,11 @@
             @Html.DisplayFor(modelItem => item.Opened)
         </td>
         <td>
-            @HtmlActionLink("See Items", "Details", "Inventory", new {  id = item.FacilityId})
+            @Html.ActionLink("See Items", "Details", "Inventory", new { id= item.FacilityId }, null)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new {  id=item.FacilityId  }) |
-            @Html.ActionLink("Details", "Details", new {  id=item.FacilityId  }) |
+            @Html.ActionLink("Details", "Details",  new {  id=item.FacilityId  }) |
             @Html.ActionLink("Delete", "Delete", new {  id=item.FacilityId })
         </td>
     </tr>

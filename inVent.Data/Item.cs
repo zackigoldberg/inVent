@@ -9,9 +9,9 @@ namespace inVent.Data
 {
     public class Item
     {
-        [Key]
+        
         public Guid UserId { get; set; }
-        [Required]
+        [Key]
         public int ItemNumber { get; set; }
         [Required]
         public string Name { get; set; }
