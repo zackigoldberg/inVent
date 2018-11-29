@@ -8,5 +8,12 @@ namespace inVent.Models.SaleModels
 {
     public class SaleEdit
     {
+        public int SaleId { get; set; }
+        public string Salesman { get; set; }
+        public int FacilityId { get; set; }
+        public int ItemNumber { get; set; }
+        public int InventoryId { get; set; }
+        public int QuantitySold { get; set; }
+        public decimal SaleTotal { get; set; }
     }
 }

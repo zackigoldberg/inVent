@@ -81,7 +81,6 @@ namespace inVent.Services
                         Opened = entity.Opened,
                         Closed = entity.Closed
                     };
-
             }
         }
         public bool UpdateFacility(FacilityEdit model)
