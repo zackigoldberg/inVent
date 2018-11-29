@@ -24,8 +24,9 @@ namespace inVent.Services
                 new Inventory()
                 {
                     FacilityId = model.FacilityId,
-                    ItemId = model.ItemId,
-                    Quantity = model.Quantity
+                    ItemNumber = model.ItemId,
+                    Quantity = model.Quantity,
+                    Price = model.Price
                 };
             using (var ctx = new ApplicationDbContext())
             {
@@ -45,9 +46,13 @@ namespace inVent.Services
                         e =>
                         new InventoryListItem
                         {
+                            InventoryId = e.InventoryId,
                             FacilityId = e.FacilityId,
-                            ItemId = e.ItemId,
-                            Quantity = e.Quantity
+                            Facility = e.Facility,
+                            ItemNumber = e.ItemNumber,
+                            Item = e.Item,
+                            Quantity = e.Quantity,
+                            Price = e.Price
                         }
                         );
                 return query.ToArray();
@@ -64,9 +69,9 @@ namespace inVent.Services
                 {
                     if (i.FacilityId == facilityId)
                     {
-                        if (!itemNumbers.ContainsKey(i.ItemId))
+                        if (!itemNumbers.ContainsKey(i.ItemNumber))
                         {
-                            itemNumbers.Add(i.ItemId, i.Quantity);
+                            itemNumbers.Add(i.ItemNumber, i.Quantity);
                         }
                     }
                 }

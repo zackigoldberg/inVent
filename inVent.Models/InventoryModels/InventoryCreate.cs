@@ -15,5 +15,6 @@ namespace inVent.Models.InventoryModels
         public int ItemId { get; set; }
         [Display(Name = "How many items are there?")]
         public int Quantity { get; set; }
+        public decimal Price { get; set; }
     }
 }

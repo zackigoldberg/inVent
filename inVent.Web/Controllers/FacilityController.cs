@@ -108,7 +108,7 @@ namespace inVent.Web.Controllers
             return View(model);
         }
 
-        // GET: Facility/Closure/5
+        // GET: Facility/Close/5
 
         public ActionResult Close(int id)
         {
