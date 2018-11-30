@@ -20,13 +20,7 @@ namespace inVent.Services
 
         public bool CreateFacility(FacilityCreate model)
         {
-            List<Item> itemList = new List<Item>();
-            //returns the current master list of items that could be at the facility
-            using (var ctx = new ApplicationDbContext())
-            {
-                itemList = ctx.Items.ToList();
-            }
-            var entity =
+           var entity =
                 new Facility()
                 {
                     OwnerId = _userId,

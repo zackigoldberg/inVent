@@ -112,7 +112,9 @@ namespace inVent.Web.Controllers
 
         public ActionResult Close(int id)
         {
-            return View();
+            var service = CreateFacilityService();
+            var model = service.GetFacilityById(id);
+            return View(model); 
         }
 
         // POST: Facility/Close/5

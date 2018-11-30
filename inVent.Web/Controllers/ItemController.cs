@@ -47,18 +47,18 @@ namespace inVent.Web.Controllers
         }
 
         //Get: Item/Display
-        public ActionResult Display(int itemNumber)
+        public ActionResult Display(int id)
         {
             var service = CreateItemService();
-            var model = service.GetItemByNumber(itemNumber);
+            var model = service.GetItemByNumber(id);
             return View(model);
         }
 
-        //Get: Item/Edit
-        public ActionResult Edit(int itemNumber)
+        //Get: Item/Edit/5
+        public ActionResult Edit(int id)
         {
             var service = CreateItemService();
-            var detail = service.GetItemByNumber(itemNumber);
+            var detail = service.GetItemByNumber(id);
             var model =
                 new ItemEdit
                 {
@@ -70,7 +70,7 @@ namespace inVent.Web.Controllers
             return View(model);
         }
 
-        //Post: Item/Edit
+        //Post: Item/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, ItemEdit model)
@@ -96,15 +96,16 @@ namespace inVent.Web.Controllers
         }
 
         //Get: Item/Delete
-        public ActionResult Delete(int itemNumber)
+        public ActionResult Delete(int id)
         {
             var service = CreateItemService();
-            var model = service.GetItemByNumber(itemNumber);
+            var model = service.GetItemByNumber(id);
             return View(model);
         }
 
         //Post: Item/Delete
         [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteSubmit(int id)
         {

@@ -99,7 +99,7 @@ namespace inVent.Services
                 var entity =
                     ctx
                     .Items
-                    .Single(e => e.ItemNumber == itemNumber && e.UserId == _userId);
+                    .Single(e => e.ItemNumber == itemNumber);
                 ctx.Items.Remove(entity);
 
 
