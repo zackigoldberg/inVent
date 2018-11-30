@@ -115,19 +115,30 @@ namespace inVent.Web.Controllers
             return View();
         }
 
-        // POST: Facility/Delete/5
+        // POST: Facility/Close/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Close(int id, FacilityDetail model)
         {
-            try
             {
-                // TODO: Add delete logic here
+                if (!ModelState.IsValid) return View(model);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                if (model.FacilityId != id)
+                {
+                    ModelState.AddModelError("", "Id Mismatch");
+                    return View(model);
+                }
+
+
+                var service = CreateFacilityService();
+
+                if (service.CloseFacility(id))
+                {
+                    TempData["SaveResult"] = "Facility was closed.";
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError("", "Facility could not be updated.");
+                return View(model);
             }
         }
     }

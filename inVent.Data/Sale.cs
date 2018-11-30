@@ -15,13 +15,7 @@ namespace inVent.Data
         public string Salesman { get; set; }
         public decimal SaleTotal { get; set; }
         public int QuantitySold { get; set; }
-
-        public int FacilityId { get; set; }
-        public virtual Facility Facility { get; set; }
-
-        public int ItemNumber { get; set; }
-        public virtual Item Item { get; set; }
-
+    
         public int InventoryId { get; set; }
         public virtual Inventory Inventory { get; set; }
     }

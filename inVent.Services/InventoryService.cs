@@ -20,14 +20,12 @@ namespace inVent.Services
 
         public bool CreateInventory(InventoryCreate model)
         {
-            var entity =
-                new Inventory()
-                {
-                    FacilityId = model.FacilityId,
-                    ItemNumber = model.ItemId,
-                    Quantity = model.Quantity,
-                    Price = model.Price
-                };
+            var entity = new Inventory();
+
+            entity.FacilityId = model.FacilityId;
+            entity.ItemNumber = model.ItemId;
+            entity.Quantity = model.Quantity;
+            entity.Price = model.Price;
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Inventories.Add(entity);

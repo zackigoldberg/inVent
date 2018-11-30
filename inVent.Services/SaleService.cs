@@ -22,23 +22,16 @@ namespace inVent.Services
 
         public bool CreateSale(SaleCreate model)
         {
-            List<Sale> saleList = new List<Sale>();
+            List<Inventory> saleList = new List<Inventory>();
+            var entity = new Sale();
 
-            using (var ctx = new ApplicationDbContext())
-            {
-                saleList = ctx.Sales.ToList();
-            }
-            var entity =
-                new Sale()
-                {
-                    UserId = _userId,
-                    Salesman = model.Salesman,
-                    FacilityId = model.FacilityId,
-                    ItemNumber = model.ItemNumber,
-                    InventoryId = model.InventoryId,
-                    QuantitySold = model.QuantitySold,
-                    SaleTotal = model.SaleTotal
-                };
+
+            entity.UserId = _userId;
+            entity.InventoryId = model.InventoryId;
+            entity.Salesman = model.Salesman;
+            entity.QuantitySold = model.QuantitySold;
+            entity.SaleTotal = model.SaleTotal;
+               
             entity = GetSaleTotal(entity);
             using (var ctx = new ApplicationDbContext())
             {
@@ -58,12 +51,12 @@ namespace inVent.Services
                         new SaleListItem
                         {
                             Salesman = e.Salesman,
-                            FacilityId = e.FacilityId,
-                            Facility = e.Facility,
-                            ItemNumber = e.ItemNumber,
-                            Item = e.Item,
-                            InventoryId = e.InventoryId,
-                            Inventory = e.Inventory,
+                            //FacilityId = e.Facility.FacilityId,
+                            //Facility = e.Facility,
+                            //ItemNumber = e.Item.ItemNumber,
+                            //Item = e.Item,
+                            InventoryId = e.Inventory.InventoryId,
+                            //Inventory = e.Inventory,
                             QuantitySold = e.QuantitySold,
                             SaleTotal = e.SaleTotal
                         }
@@ -84,11 +77,57 @@ namespace inVent.Services
                     new SaleDetail
                     {
                         Salesman = entity.Salesman,
-                        FacilityId = entity.FacilityId,
-                        Facility = entity.Facility,
-                        ItemNumber = entity.ItemNumber,
-                        Item = entity.Item,
-                        InventoryId = entity.InventoryId,
+                        //FacilityId = entity.Facility.FacilityId,
+                        //Facility = entity.Facility,
+                        //ItemNumber = entity.Item.ItemNumber,
+                        //Item = entity.Item,
+                        InventoryId = entity.Inventory.InventoryId,
+                        //Inventory = entity.Inventory,
+                        QuantitySold = entity.QuantitySold,
+                        SaleTotal = entity.SaleTotal
+                    };
+            }
+        }
+        public SaleDetail GetSaleByFacilityId(int facilityId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Sales
+                    .Single(e => e.Inventory.FacilityId == facilityId);
+                return
+                    new SaleDetail
+                    {
+                        Salesman = entity.Salesman,
+                        FacilityId = entity.Inventory.FacilityId,
+                        Facility = entity.Inventory.Facility,
+                        ItemNumber = entity.Inventory.ItemNumber,
+                        Item = entity.Inventory.Item,
+                        InventoryId = entity.Inventory.InventoryId,
+                        Inventory = entity.Inventory,
+                        QuantitySold = entity.QuantitySold,
+                        SaleTotal = entity.SaleTotal
+                    };
+            }
+        }
+        public SaleDetail GetSaleByInventoryId(int inventoryId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Sales
+                    .Single(e => e.Inventory.InventoryId == inventoryId);
+                return
+                    new SaleDetail
+                    {
+                        Salesman = entity.Salesman,
+                        FacilityId = entity.Inventory.FacilityId,
+                        Facility = entity.Inventory.Facility,
+                        ItemNumber = entity.Inventory.ItemNumber,
+                        Item = entity.Inventory.Item,
+                        InventoryId = entity.Inventory.InventoryId,
                         Inventory = entity.Inventory,
                         QuantitySold = entity.QuantitySold,
                         SaleTotal = entity.SaleTotal
@@ -105,9 +144,7 @@ namespace inVent.Services
                     .Single(e => e.SaleId == model.SaleId);
 
                 entity.Salesman = model.Salesman;
-                entity.FacilityId = model.FacilityId;
-                entity.ItemNumber = model.ItemNumber;
-                entity.InventoryId = model.InventoryId;
+                entity.Inventory = ctx.Inventories.Single(e => e.InventoryId == model.InventoryId);
                 entity.QuantitySold = model.QuantitySold;
                 entity.SaleTotal = model.SaleTotal;
 
