@@ -1,5 +1,6 @@
 ﻿using inVent.Data;
 using inVent.Models.InventoryModels;
+using inVent.Web.Controllers;
 using inVent.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,20 @@ namespace inVent.Services
             _userId = userId;
         }
 
+        public List<Facility> Facilities()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                return ctx.Facilities.ToList();
+            }
+        }
+        public List<Item> Items()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                return ctx.Items.ToList();
+            }
+        }
         public bool CreateInventory(InventoryCreate model)
         {
             var entity = new Inventory();
@@ -92,6 +107,40 @@ namespace inVent.Services
                     updateList.Add(query.FirstOrDefault());
                 }
                 return updateList.ToArray();
+            }
+        }
+
+        public bool EditInventory(InventoryEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Inventories
+                    .Single(e => e.InventoryId == model.InventoryId);
+
+                entity.FacilityId = model.FacilityId;
+                entity.Facility = model.Facility;
+                entity.ItemNumber = model.ItemNumber;
+                entity.Item = model.Item;
+                entity.Quantity = model.Quantity;
+                entity.Price = model.Price;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
+        public bool DeleteInventory(int inventoryId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Inventories
+                    .Single(e => e.InventoryId == inventoryId);
+                ctx.Inventories.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
             }
         }
     }

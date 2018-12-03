@@ -14,10 +14,10 @@ namespace inVent.Models.InventoryModels
         public decimal Price { get; set; }
 
         public int FacilityId { get; set; }
-        public virtual Facility Facility { get; set; }
+        public Facility Facility { get; set; }
 
         public int ItemNumber { get; set; }
-        public virtual Item Item { get; set; }
+        public Item Item { get; set; }
         
     }
 }

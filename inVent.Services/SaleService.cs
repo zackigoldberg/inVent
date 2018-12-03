@@ -77,12 +77,12 @@ namespace inVent.Services
                     new SaleDetail
                     {
                         Salesman = entity.Salesman,
-                        //FacilityId = entity.Facility.FacilityId,
-                        //Facility = entity.Facility,
-                        //ItemNumber = entity.Item.ItemNumber,
-                        //Item = entity.Item,
+                        FacilityId = entity.Inventory.FacilityId,
+                        Facility = entity.Inventory.Facility,
+                        ItemNumber = entity.Inventory.ItemNumber,
+                        Item = entity.Inventory.Item,
                         InventoryId = entity.Inventory.InventoryId,
-                        //Inventory = entity.Inventory,
+                        Inventory = entity.Inventory,
                         QuantitySold = entity.QuantitySold,
                         SaleTotal = entity.SaleTotal
                     };

@@ -19,5 +19,6 @@ namespace inVent.Models.SaleModels
         public Inventory Inventory { get; set; }
         public int QuantitySold { get; set; }
         public decimal SaleTotal { get; set; }
+        public int SaleId { get; set; }
     }
 }

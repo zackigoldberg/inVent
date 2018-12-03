@@ -66,18 +66,22 @@ namespace inVent.Web.Controllers
 
         // POST: Inventory/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, InventoryEdit model)
         {
-            try
-            {
-                // TODO: Add update logic here
+            if (!ModelState.IsValid) return View(model);
 
+            var service = CreateInventoryService();
+
+            if (service.EditInventory(model))
+            {
+                TempData["SaveResult"] = "Inventory was created.";
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            ModelState.AddModelError("", "Inventory not created.");
+
+            return View(model);
         }
 
         // GET: Inventory/Delete/5
@@ -88,18 +92,23 @@ namespace inVent.Web.Controllers
 
         // POST: Inventory/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, InventoryDetail model)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            if (!ModelState.IsValid) return View(model);
 
+            var service = CreateInventoryService();
+
+            if (service.DeleteInventory(id))
+            {
+                TempData["SaveResult"] = "Inventory was created.";
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            ModelState.AddModelError("", "Inventory not created.");
+
+            return View(model);
         }
     }
 }
