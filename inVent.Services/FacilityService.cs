@@ -62,7 +62,7 @@ namespace inVent.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var entity = 
+                var entity =    
                     ctx
                     .Facilities
                     .Single(e => e.FacilityId == facilityId);

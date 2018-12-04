@@ -16,7 +16,7 @@ namespace inVent.Models.InventoryModels
         public List<Item> FacilityList { get; set; }
 
         [Display(Name = "Which item would you like to tie to this facility?")]
-        public int ItemId { get; set; }
+        public int ItemNumber { get; set; }
         public Item Item { get; set; }
         public List<Item> ItemList { get; set; }
 

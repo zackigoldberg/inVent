@@ -33,12 +33,19 @@ namespace inVent.Services
                 return ctx.Items.ToList();
             }
         }
+        public List<Inventory> Inventories()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                return ctx.Inventories.ToList();
+            }
+        }
         public bool CreateInventory(InventoryCreate model)
         {
             var entity = new Inventory();
 
             entity.FacilityId = model.FacilityId;
-            entity.ItemNumber = model.ItemId;
+            entity.ItemNumber = model.ItemNumber;
             entity.Quantity = model.Quantity;
             entity.Price = model.Price;
             using (var ctx = new ApplicationDbContext())

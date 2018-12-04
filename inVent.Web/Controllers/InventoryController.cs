@@ -1,5 +1,7 @@
-﻿using inVent.Models.InventoryModels;
+﻿using inVent.Data;
+using inVent.Models.InventoryModels;
 using inVent.Services;
+using inVent.Web.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -31,10 +33,18 @@ namespace inVent.Web.Controllers
             var model = service.GetFacilityInventory(id);
             return View(model);
         }
-
+        private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Inventory/Create
         public ActionResult Create()
         {
+            var itemList = new SelectList(db.Items, "ItemNumber", "Name").ToList();
+
+            var facilityList = new SelectList(db.Facilities, "FacilityID", "Name").ToList();
+
+            ViewBag.ItemNumber = itemList;
+            ViewBag.FacilityId = facilityList;
+
+
             return View();
         }
 
@@ -47,7 +57,7 @@ namespace inVent.Web.Controllers
 
             var service = CreateInventoryService();
 
-            if(service.CreateInventory(model))
+            if (service.CreateInventory(model))
             {
                 TempData["SaveResult"] = "Inventory was created.";
                 return RedirectToAction("Index");
@@ -61,7 +71,23 @@ namespace inVent.Web.Controllers
         // GET: Inventory/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var service = CreateInventoryService();
+            var model = service.Inventories().Find(e => e.InventoryId == id);
+            var itemList = new SelectList(db.Items, "ItemNumber", "Name").ToList();
+            var facilityList = new SelectList(db.Facilities, "FacilityID", "Name").ToList();
+            var editor =
+                new InventoryEdit
+                {
+                    InventoryId = model.InventoryId,
+                    FacilityId = model.FacilityId,
+                    ItemNumber = model.ItemNumber,
+                    Quantity = model.Quantity,
+                    Price = model.Price
+                };
+            ViewBag.ItemNumber = itemList;
+            ViewBag.FacilityId = facilityList;
+
+            return View(editor);
         }
 
         // POST: Inventory/Edit/5

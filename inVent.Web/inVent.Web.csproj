@@ -265,6 +265,7 @@
     <Content Include="Views\Sale\Delete.cshtml" />
     <Content Include="Views\Sale\SalesDetails.cshtml" />
     <Content Include="Views\Inventory\Delete.cshtml" />
+    <Content Include="Views\Inventory\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
