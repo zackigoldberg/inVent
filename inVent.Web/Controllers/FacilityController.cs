@@ -1,6 +1,7 @@
 ﻿using inVent.Data;
 using inVent.Models.FacilityModels;
 using inVent.Services;
+using inVent.Web.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -26,11 +27,14 @@ namespace inVent.Web.Controllers
             var service = new FacilityService(userId);
             return service;
         }
+        private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Facility/Details/5
         public ActionResult Details(int id)
         {
             var service = CreateFacilityService();
             var model = service.GetFacilityById(id);
+            model.Inventories = db.Inventories.Where(e => e.FacilityId == id).ToList();
+            model.Sales = service.SalesByFacilityId(id);
             return View(model);
         }
 
@@ -75,9 +79,7 @@ namespace inVent.Web.Controllers
                 {
                     FacilityId = detail.FacilityId,
                     Name = detail.Name,
-                    Type = detail.Type,
-                    Items = detail.Items,
-                    Sales = detail.Sales
+                    Type = detail.Type
                 };
             return View(model);
         }

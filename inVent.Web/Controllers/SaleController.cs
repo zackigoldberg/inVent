@@ -1,5 +1,6 @@
 ﻿using inVent.Models.SaleModels;
 using inVent.Services;
+using inVent.Web.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,7 @@ namespace inVent.Web.Controllers
         //}
 
         // GET: Sale/Create
+        private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Create()
         {
             return View();

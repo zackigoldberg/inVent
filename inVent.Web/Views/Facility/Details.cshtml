@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>FacilityDetail</h4>
+    <h4>Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -51,6 +51,81 @@
 
     </dl>
 </div>
+
+@if (Model.Inventories != null)
+{
+    <h3>Inventories associated with this Facility</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th> Item Name: </th>
+            <th> Pack Size: </th>
+            <th> Quantity: </th>
+            <th> Price: </th>
+        </tr>
+        @foreach (var inventory in Model.Inventories)
+        {
+            
+                <tr>
+                    <td></td>
+                    <td>
+                        @inventory.Item.Name
+                    </td>
+                    <td>
+                        @inventory.Item.PackSize
+                    </td>
+                    <td>
+                        @inventory.Quantity
+                    </td>
+                    <td>
+                        @inventory.Price
+                    </td>
+                </tr>
+            
+        }
+    </table>
+}
+@if (Model.Sales != null)
+{
+    <h3>Sales made from this Facility</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th> Salesman: </th>
+            <th> Item Name: </th>
+            <th> Pack Size: </th>
+            <th> Quantity: </th>
+            <th> Price: </th>
+            <th> Total: </th>
+        </tr>
+        @foreach (var sales in Model.Sales)
+        {
+                <tr>
+                    <td></td>
+                    <td>
+                        @sales.Salesman
+                    </td>
+                    <td>
+                        @sales.Inventory.Item.Name
+                    </td>
+                    <td>
+                        @sales.Inventory.Item.PackSize
+                    </td>
+                    <td>
+                        @sales.QuantitySold
+                    </td>
+                    <td>
+                        $@sales.Inventory.Price
+                    </td>
+                    <td>
+                        $@sales.SaleTotal
+                    </td>
+                </tr>
+        }
+    </table>
+}
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.FacilityId }) |
     @Html.ActionLink("Back to List", "Index")

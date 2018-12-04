@@ -14,6 +14,7 @@ namespace inVent.Web.Controllers
     [Authorize]
     public class InventoryController : Controller
     {
+       private ApplicationDbContext db = new ApplicationDbContext(); 
         // GET: Inventory
         public ActionResult Index()
         {
@@ -33,7 +34,7 @@ namespace inVent.Web.Controllers
             var model = service.GetFacilityInventory(id);
             return View(model);
         }
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
         // GET: Inventory/Create
         public ActionResult Create()
         {

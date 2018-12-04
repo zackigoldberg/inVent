@@ -104,5 +104,16 @@ namespace inVent.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+        public List<Sale> SalesByFacilityId(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .Sales
+                    .Where(e => e.Inventory.FacilityId == id);
+                return query.ToList();
+            }
+        }
     }
 }

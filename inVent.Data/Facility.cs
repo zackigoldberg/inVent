@@ -10,7 +10,7 @@ namespace inVent.Data
     public enum FacilityType
     {
         [Display(Name = "Production")]
-        Production = 1,
+        Production = 0,
         [Display(Name = "Distribution")]
         Distribution,
         [Display(Name = "Retail")]
