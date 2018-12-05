@@ -1,4 +1,5 @@
 ﻿using inVent.Data;
+using System.Collections.Generic;
 
 namespace inVent.Web.Controllers
 {
@@ -9,10 +10,10 @@ namespace inVent.Web.Controllers
         public decimal Price { get; set; }
 
         public int ItemNumber { get; set; }
-        public Item Item { get; set; }
+        public List<Item> Items { get; set; }
 
         public int FacilityId { get; set; }
-        public Facility Facility { get; set; }
+        public List<Facility> Facilities { get; set; }
 
 
     }

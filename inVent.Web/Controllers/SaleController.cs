@@ -48,9 +48,17 @@ namespace inVent.Web.Controllers
         //}
 
         // GET: Sale/Create
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
         public ActionResult Create()
         {
+
+            var service = CreateSaleService();
+            var itemList = new SelectList(service.Items(), "ItemNumber", "Name").ToList();
+
+            var facilityList = new SelectList(service.Facilities(), "FacilityID", "Name").ToList();
+            ViewBag.ItemNumber = itemList;
+            ViewBag.FacilityId = facilityList;
+
             return View();
         }
 
@@ -63,9 +71,12 @@ namespace inVent.Web.Controllers
 
             var service = CreateSaleService();
 
+            
+            var entity = service.Inventories().Single(e => e.FacilityId == model.FacilityId && e.ItemNumber == model.ItemNumber);
+            model.InventoryId = entity.InventoryId;
             if (service.CreateSale(model))
             {
-                TempData["SaveResult"] = "Sale created.";
+                TempData["SaveResult"] = $"Sale created, the total was ${model.SaleTotal, 0:2N}.";
                 return RedirectToAction("Index");
             }
 

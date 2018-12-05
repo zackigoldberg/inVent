@@ -14,7 +14,7 @@ namespace inVent.Web.Controllers
     [Authorize]
     public class InventoryController : Controller
     {
-       private ApplicationDbContext db = new ApplicationDbContext(); 
+       
         // GET: Inventory
         public ActionResult Index()
         {
@@ -38,9 +38,10 @@ namespace inVent.Web.Controllers
         // GET: Inventory/Create
         public ActionResult Create()
         {
-            var itemList = new SelectList(db.Items, "ItemNumber", "Name").ToList();
+            var service = CreateInventoryService();
+            var itemList = new SelectList(service.Items(), "ItemNumber", "Name").ToList();
 
-            var facilityList = new SelectList(db.Facilities, "FacilityID", "Name").ToList();
+            var facilityList = new SelectList(service.Facilities(), "FacilityID", "Name").ToList();
 
             ViewBag.ItemNumber = itemList;
             ViewBag.FacilityId = facilityList;
@@ -74,19 +75,18 @@ namespace inVent.Web.Controllers
         {
             var service = CreateInventoryService();
             var model = service.Inventories().Find(e => e.InventoryId == id);
-            var itemList = new SelectList(db.Items, "ItemNumber", "Name").ToList();
-            var facilityList = new SelectList(db.Facilities, "FacilityID", "Name").ToList();
+
             var editor =
                 new InventoryEdit
                 {
                     InventoryId = model.InventoryId,
+                    Items = service.Items(),
+                    Facilities = service.Facilities(),
                     FacilityId = model.FacilityId,
                     ItemNumber = model.ItemNumber,
                     Quantity = model.Quantity,
                     Price = model.Price
                 };
-            ViewBag.ItemNumber = itemList;
-            ViewBag.FacilityId = facilityList;
 
             return View(editor);
         }
@@ -96,17 +96,22 @@ namespace inVent.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, InventoryEdit model)
         {
-            if (!ModelState.IsValid) return View(model);
-
             var service = CreateInventoryService();
+            if (!ModelState.IsValid)
+            {       
+                return View(model);
+            }
 
             if (service.EditInventory(model))
             {
-                TempData["SaveResult"] = "Inventory was created.";
+                TempData["SaveResult"] = "Inventory was edited.";
                 return RedirectToAction("Index");
             }
-
-            ModelState.AddModelError("", "Inventory not created.");
+            model.Facilities = service.Facilities();
+            model.Items = service.Items();
+            model.ItemNumber = service.Inventories().SingleOrDefault(e => e.InventoryId == id).ItemNumber;
+            model.FacilityId = service.Inventories().SingleOrDefault(e => e.InventoryId == id).FacilityId;
+            ModelState.AddModelError("", "Inventory failed to update.");
 
             return View(model);
         }

@@ -127,9 +127,7 @@ namespace inVent.Services
                     .Single(e => e.InventoryId == model.InventoryId);
 
                 entity.FacilityId = model.FacilityId;
-                entity.Facility = model.Facility;
                 entity.ItemNumber = model.ItemNumber;
-                entity.Item = model.Item;
                 entity.Quantity = model.Quantity;
                 entity.Price = model.Price;
 

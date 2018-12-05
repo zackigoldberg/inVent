@@ -30,7 +30,7 @@ namespace inVent.Services
             entity.InventoryId = model.InventoryId;
             entity.Salesman = model.Salesman;
             entity.QuantitySold = model.QuantitySold;
-            entity.SaleTotal = model.SaleTotal;
+            
                
             entity = GetSaleTotal(entity);
             using (var ctx = new ApplicationDbContext())
@@ -169,6 +169,27 @@ namespace inVent.Services
             model.SaleTotal = model.Inventory.Price * model.QuantitySold;
 
             return model;
+        }
+        public IEnumerable<Item> Items()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                return ctx.Items;
+            }
+        }
+        public IEnumerable<Facility> Facilities()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                return ctx.Facilities;
+            }
+        }
+        public IEnumerable<Inventory> Inventories()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                return ctx.Inventories;
+            }
         }
     }
 
