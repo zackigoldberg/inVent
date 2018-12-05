@@ -1,4 +1,4 @@
-﻿using inVent.Data;
+﻿ using inVent.Data;
 using inVent.Models.FacilityModels;
 using inVent.Models.SaleModels;
 using inVent.Web.Models;
@@ -25,18 +25,17 @@ namespace inVent.Services
             List<Inventory> saleList = new List<Inventory>();
             var entity = new Sale();
 
-
             entity.UserId = _userId;
             entity.InventoryId = model.InventoryId;
             entity.Salesman = model.Salesman;
             entity.QuantitySold = model.QuantitySold;
             
-               
             entity = GetSaleTotal(entity);
             using (var ctx = new ApplicationDbContext())
             {
                 ctx.Sales.Add(entity);
-                return ctx.SaveChanges() == 1;
+                ctx.Inventories.Single(e => e.InventoryId == model.InventoryId).Quantity -= model.QuantitySold;
+                return ctx.SaveChanges() == 2;
             }
         }
         public IEnumerable<SaleListItem> GetSales()
@@ -50,13 +49,14 @@ namespace inVent.Services
                         e =>
                         new SaleListItem
                         {
+                            SaleId = e.SaleId,
                             Salesman = e.Salesman,
-                            //FacilityId = e.Facility.FacilityId,
-                            //Facility = e.Facility,
-                            //ItemNumber = e.Item.ItemNumber,
-                            //Item = e.Item,
+                            FacilityId = e.Inventory.Facility.FacilityId,
+                            Facility = e.Inventory.Facility,
+                            ItemNumber = e.Inventory.Item.ItemNumber,
+                            Item = e.Inventory.Item,
                             InventoryId = e.Inventory.InventoryId,
-                            //Inventory = e.Inventory,
+                            Inventory = e.Inventory,
                             QuantitySold = e.QuantitySold,
                             SaleTotal = e.SaleTotal
                         }
@@ -76,6 +76,7 @@ namespace inVent.Services
                 return
                     new SaleDetail
                     {
+                        SaleId = saleId,
                         Salesman = entity.Salesman,
                         FacilityId = entity.Inventory.FacilityId,
                         Facility = entity.Inventory.Facility,
@@ -99,6 +100,7 @@ namespace inVent.Services
                 return
                     new SaleDetail
                     {
+                        SaleId = entity.SaleId,
                         Salesman = entity.Salesman,
                         FacilityId = entity.Inventory.FacilityId,
                         Facility = entity.Inventory.Facility,
@@ -143,6 +145,7 @@ namespace inVent.Services
                     .Sales
                     .Single(e => e.SaleId == model.SaleId);
 
+                entity.SaleId = model.SaleId;
                 entity.Salesman = model.Salesman;
                 entity.Inventory = ctx.Inventories.Single(e => e.InventoryId == model.InventoryId);
                 entity.QuantitySold = model.QuantitySold;
@@ -166,29 +169,29 @@ namespace inVent.Services
         }
         private Sale GetSaleTotal(Sale model)
         {
-            model.SaleTotal = model.Inventory.Price * model.QuantitySold;
+            using (var ctx = new ApplicationDbContext()) { model.SaleTotal = ctx.Inventories.First(e=>e.InventoryId == model.InventoryId).Price * model.QuantitySold; }
 
             return model;
         }
-        public IEnumerable<Item> Items()
+        public List<Item> Items()
         {
             using (var ctx = new ApplicationDbContext())
             {
-                return ctx.Items;
+                return ctx.Items.ToList();
             }
         }
-        public IEnumerable<Facility> Facilities()
+        public List<Facility> Facilities()
         {
             using (var ctx = new ApplicationDbContext())
             {
-                return ctx.Facilities;
+                return ctx.Facilities.ToList();
             }
         }
-        public IEnumerable<Inventory> Inventories()
+        public List<Inventory> Inventories()
         {
             using (var ctx = new ApplicationDbContext())
             {
-                return ctx.Inventories;
+                return ctx.Inventories.ToList();
             }
         }
     }

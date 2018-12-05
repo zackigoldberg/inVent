@@ -30,32 +30,15 @@ namespace inVent.Web.Controllers
             var model = service.GetSaleById(id);
             return View(model);
         }
-        // GET: Sale/InventoryDetails/5
-        //[ActionName("InventoryDetails")]
-        //public ActionResult InventoryDetails(int id)
-        //{
-        //    var service = CreateSaleService();
-        //    var model = service.GetSaleByInventoryId(id);
-        //    return View(model);
-        //}
-        // GET: Sale/FacilityDetails/5
-        //[ActionName("FacilityDetails")]
-        //public ActionResult FacilityDetails(int id)
-        //{
-        //    var service = CreateSaleService();
-        //    var model = service.GetSaleByFacilityId(id);
-        //    return View(model);
-        //}
 
         // GET: Sale/Create
         
         public ActionResult Create()
         {
-
             var service = CreateSaleService();
-            var itemList = new SelectList(service.Items(), "ItemNumber", "Name").ToList();
+            var itemList = new SelectList(service.Items(), "ItemNumber", "Name");
+            var facilityList = new SelectList(service.Facilities(), "FacilityID", "Name");
 
-            var facilityList = new SelectList(service.Facilities(), "FacilityID", "Name").ToList();
             ViewBag.ItemNumber = itemList;
             ViewBag.FacilityId = facilityList;
 
@@ -72,7 +55,7 @@ namespace inVent.Web.Controllers
             var service = CreateSaleService();
 
             
-            var entity = service.Inventories().Single(e => e.FacilityId == model.FacilityId && e.ItemNumber == model.ItemNumber);
+            var entity = service.Inventories().FirstOrDefault(e => e.FacilityId == model.FacilityId && e.ItemNumber == model.ItemNumber);
             model.InventoryId = entity.InventoryId;
             if (service.CreateSale(model))
             {
