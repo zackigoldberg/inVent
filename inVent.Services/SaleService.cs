@@ -1,5 +1,6 @@
 ﻿ using inVent.Data;
 using inVent.Models.FacilityModels;
+using inVent.Models.InventoryModels;
 using inVent.Models.SaleModels;
 using inVent.Web.Models;
 using System;
@@ -33,13 +34,18 @@ namespace inVent.Services
             entity = GetSaleTotal(entity);
             using (var ctx = new ApplicationDbContext())
             {
-                ctx.Sales.Add(entity);
-                ctx.Inventories.Single(e => e.InventoryId == model.InventoryId).Quantity -= model.QuantitySold;
-                return ctx.SaveChanges() == 2;
+                if (ctx.Inventories.Single(e => e.InventoryId == entity.InventoryId).Quantity >= entity.QuantitySold)
+                {
+                    ctx.Inventories.Single(e => e.InventoryId == entity.InventoryId).Quantity -= entity.QuantitySold;
+                    ctx.Sales.Add(entity);
+                    return ctx.SaveChanges() == 2;
+                }
+                return false;
+                
             }
         }
         public IEnumerable<SaleListItem> GetSales()
-        {
+        { 
             using (var ctx = new ApplicationDbContext())
             {
                 var query =
@@ -192,6 +198,29 @@ namespace inVent.Services
             using (var ctx = new ApplicationDbContext())
             {
                 return ctx.Inventories.ToList();
+            }
+        }
+        public SaleCreate AvailableInventory()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var model =
+                new SaleCreate
+                {
+                    Inventories = ctx.Inventories.Select(e =>
+                   new InventoryListItem
+                   {
+                       InventoryId = e.InventoryId,
+                       FacilityId = e.FacilityId,
+                       Facility = e.Facility,
+                       ItemNumber = e.ItemNumber,
+                       Item = e.Item,
+                       Quantity = e.Quantity,
+                       Price = e.Price
+                   }).ToList()
+                   
+                };
+                return model;
             }
         }
     }

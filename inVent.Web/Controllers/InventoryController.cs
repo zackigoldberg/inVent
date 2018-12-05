@@ -58,6 +58,15 @@ namespace inVent.Web.Controllers
             if (!ModelState.IsValid) return View(model);
 
             var service = CreateInventoryService();
+            var checkList = service.Inventories();
+            foreach (var inventory in checkList)
+            {
+                if(inventory.FacilityId == model.FacilityId && inventory.ItemNumber == model.ItemNumber)
+                {
+                    TempData["SaveResult"] = "Item you are trying to inventory already exists at this facility, please edit existing inventory to adjust stock quantity.";
+                    return RedirectToAction("Edit", new { id = inventory.InventoryId });
+                }
+            }
 
             if (service.CreateInventory(model))
             {

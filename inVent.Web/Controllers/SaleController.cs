@@ -1,4 +1,5 @@
-﻿using inVent.Models.SaleModels;
+﻿using inVent.Models.InventoryModels;
+using inVent.Models.SaleModels;
 using inVent.Services;
 using inVent.Web.Models;
 using Microsoft.AspNet.Identity;
@@ -13,7 +14,7 @@ namespace inVent.Web.Controllers
     [Authorize]
     public class SaleController : Controller
     {
-        
+
         // GET: Sale
         public ActionResult Index()
         {
@@ -32,7 +33,7 @@ namespace inVent.Web.Controllers
         }
 
         // GET: Sale/Create
-        
+
         public ActionResult Create()
         {
             var service = CreateSaleService();
@@ -41,9 +42,14 @@ namespace inVent.Web.Controllers
 
             ViewBag.ItemNumber = itemList;
             ViewBag.FacilityId = facilityList;
-
-            return View();
+            var model = service.AvailableInventory();
+            model.Inventories.Sort((x, y) => string.Compare(x.Facility.Name, y.Facility.Name));
+            return View(model);
         }
+
+
+
+
 
         // POST: Sale/Create
         [HttpPost]
@@ -54,13 +60,26 @@ namespace inVent.Web.Controllers
 
             var service = CreateSaleService();
 
-            
             var entity = service.Inventories().FirstOrDefault(e => e.FacilityId == model.FacilityId && e.ItemNumber == model.ItemNumber);
-            model.InventoryId = entity.InventoryId;
-            if (service.CreateSale(model))
+            if (entity != null)
             {
-                TempData["SaveResult"] = $"Sale created, the total was ${model.SaleTotal, 0:2N}.";
+                model.InventoryId = entity.InventoryId;
+            }
+            else
+            {
+                TempData["SaveResult"] = $"The Item you are looking for is unavailable at the chosen facility";
+                return View(model);
+            }
+
+            if (service.CreateSale(model)==true)
+            {
+                TempData["SaveResult"] = $"Sale created, the total was ${model.SaleTotal,0:2N}.";
                 return RedirectToAction("Index");
+            }
+            else if (service.CreateSale(model)==false)
+            {
+                TempData["SaveResult"] = $"Cannot sell more items than are available please try again, current stock available at this facility:{entity.Quantity}.";
+                return View(model);
             }
 
             ModelState.AddModelError("", "Sale failed.");
@@ -72,7 +91,7 @@ namespace inVent.Web.Controllers
         public ActionResult Edit(int id)
         {
             var service = CreateSaleService();
-            var detail = service.GetSaleByFacilityId(id);
+            var detail = service.GetSaleById(id);
             var model =
                 new SaleEdit
                 {
@@ -81,7 +100,7 @@ namespace inVent.Web.Controllers
                     QuantitySold = detail.QuantitySold,
                     InventoryId = detail.InventoryId,
                     SaleTotal = detail.SaleTotal,
-                    ItemNumber = detail.ItemNumber                    
+                    ItemNumber = detail.ItemNumber
                 };
             return View(model);
         }
