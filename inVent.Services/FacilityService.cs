@@ -1,5 +1,7 @@
 ﻿using inVent.Data;
 using inVent.Models.FacilityModels;
+using inVent.Models.InventoryModels;
+using inVent.Models.SaleModels;
 using inVent.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -104,14 +106,51 @@ namespace inVent.Services
                 return ctx.SaveChanges() == 1;
             }
         }
-        public List<Sale> SalesByFacilityId(int id)
+        public List<SaleListItem> SalesByFacilityId(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var query =
                     ctx
                     .Sales
-                    .Where(e => e.Inventory.FacilityId == id);
+                    .Where(e => e.Inventory.FacilityId == id)
+                    .Select(e =>
+                    new SaleListItem
+                    {
+                        SaleId = e.SaleId,
+                        Salesman = e.Salesman,
+                        FacilityId = e.Inventory.Facility.FacilityId,
+                        Facility = e.Inventory.Facility,
+                        ItemNumber = e.Inventory.Item.ItemNumber,
+                        Item = e.Inventory.Item,
+                        InventoryId = e.Inventory.InventoryId,
+                        Inventory = e.Inventory,
+                        QuantitySold = e.QuantitySold,
+                        SaleTotal = e.SaleTotal
+                    });
+                return query.ToList();
+            } 
+        }
+        public List<InventoryListItem> Inventories(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+
+                var query =
+                 ctx
+                 .Inventories
+                 .Where(e => e.FacilityId == id)
+                 .Select( e=>
+                 new InventoryListItem
+                 {
+                     InventoryId = e.InventoryId,
+                     FacilityId = e.FacilityId,
+                     Facility = e.Facility,
+                     ItemNumber = e.ItemNumber,
+                     Item = e.Item,
+                     Quantity = e.Quantity,
+                     Price = e.Price
+                 });
                 return query.ToList();
             }
         }

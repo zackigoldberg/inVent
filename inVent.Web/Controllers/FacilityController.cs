@@ -27,13 +27,12 @@ namespace inVent.Web.Controllers
             var service = new FacilityService(userId);
             return service;
         }
-        private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Facility/Details/5
         public ActionResult Details(int id)
         {
             var service = CreateFacilityService();
             var model = service.GetFacilityById(id);
-            model.Inventories = db.Inventories.Where(e => e.FacilityId == id).ToList();
+            model.Inventories = service.Inventories(id);
             model.Sales = service.SalesByFacilityId(id);
             return View(model);
         }
