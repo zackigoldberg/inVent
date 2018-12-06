@@ -13,9 +13,10 @@ namespace inVent.Models.ItemModels
         [MinLength(3, ErrorMessage ="Please enter at least 3 characters.")]
         [MaxLength(100, ErrorMessage = "Emon Lusk does not like names of this length.")]
             public string Name { get; set; }
-
+        [Required]
         [MaxLength(240, ErrorMessage = "Keep it short and sweet")]
         public string Description { get; set; }
+        [Required]
         [Display(Name = "Pack Size:")]
         public string PackSize { get; set; }
     }

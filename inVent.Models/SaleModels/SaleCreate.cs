@@ -1,6 +1,7 @@
 ﻿using inVent.Models.InventoryModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,11 @@ namespace inVent.Models.SaleModels
     {
         public int InventoryId { get; set; }
         public List<InventoryListItem> Inventories { get; set; }
+        [Required]
+        [MinLength(3, ErrorMessage = "Please enter at least 3 characters.")]
         public string Salesman { get; set; }
+        [Required]
+        [Range(0,999999999,ErrorMessage ="Please enter a non-negative quantity")]
         public int QuantitySold { get; set; }
         public decimal SaleTotal { get; set; }
         public int FacilityId { get; set; }

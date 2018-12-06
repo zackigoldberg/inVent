@@ -40,7 +40,6 @@ namespace inVent.Web.Controllers
         {
             var service = CreateInventoryService();
             var itemList = new SelectList(service.Items(), "ItemNumber", "Name").ToList();
-
             var facilityList = new SelectList(service.Facilities(), "FacilityID", "Name").ToList();
 
             ViewBag.ItemNumber = itemList;

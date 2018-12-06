@@ -73,7 +73,7 @@ namespace inVent.Web.Controllers
 
             if (service.CreateSale(model)==true)
             {
-                TempData["SaveResult"] = $"Sale created, the total was ${model.SaleTotal,0:2N}.";
+                TempData["SaveResult"] = $"Sale created, the total was ${model.SaleTotal}";
                 return RedirectToAction("Index");
             }
             else if (service.CreateSale(model)==false)

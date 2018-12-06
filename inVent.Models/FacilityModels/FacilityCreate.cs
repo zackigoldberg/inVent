@@ -10,7 +10,9 @@ namespace inVent.Models.FacilityModels
 {
     public  class FacilityCreate
     {
+        [Required]
         public string Name { get; set; }
+        [Required]
         public FacilityType Type { get; set; }
     }
 }
