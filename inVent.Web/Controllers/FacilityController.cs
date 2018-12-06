@@ -120,6 +120,7 @@ namespace inVent.Web.Controllers
 
         // POST: Facility/Close/5
         [HttpPost]
+        [ActionName("Close")]
         public ActionResult Close(int id, FacilityDetail model)
         {
             {
@@ -143,6 +144,13 @@ namespace inVent.Web.Controllers
                 ModelState.AddModelError("", "Facility could not be updated.");
                 return View(model);
             }
+        }
+        //GET: Facility/ClosedFacilitiesList
+        public ActionResult ClosedFacilitiesList()
+        {
+            var service = CreateFacilityService();
+            var model = service.GetClosedFacilities();
+            return View(model);
         }
     }
 }

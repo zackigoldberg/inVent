@@ -4,11 +4,8 @@
     ViewBag.Title = "ClosedFacilitiesList";
 }
 
-<h2>ClosedFacilitiesList</h2>
+<h2>Closed Facilities</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -39,11 +36,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Closed)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>
 }

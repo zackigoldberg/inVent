@@ -60,6 +60,29 @@ namespace inVent.Services
             }
         }
 
+        public IEnumerable<FacilityListItem> GetClosedFacilities()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .Facilities
+                    .Where(e => e.Closed != null)
+                    .Select(
+                        e =>
+                        new FacilityListItem
+                        {
+                            FacilityId = e.FacilityId,
+                            Name = e.Name,
+                            Type = e.Type,
+                            Opened = e.Opened,
+                            Closed = e.Closed
+                        }
+                            );
+                return query.ToArray();
+            }
+        }
+
         public FacilityDetail GetFacilityById(int facilityId)
         {
             using (var ctx = new ApplicationDbContext())

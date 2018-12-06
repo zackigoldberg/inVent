@@ -41,7 +41,7 @@
             @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Opened)
+            @Html.DisplayFor(modelItem => item.Opened.Date)
         </td>
         <td>
             @Html.ActionLink("See Items", "Details", "Inventory", new { id= item.FacilityId }, null)
@@ -55,3 +55,5 @@
 }
 
 </table>
+
+@Html.ActionLink("See Closed Facilities","ClosedFacilitiesList")
