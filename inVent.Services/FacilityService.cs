@@ -14,12 +14,12 @@ namespace inVent.Services
     public class FacilityService
     {
         private readonly Guid _userId;
-
-        public FacilityService(Guid userId)
+        private readonly bool _admin;
+        public FacilityService(Guid userId, bool admin)
         {
             _userId = userId;
+            _admin = admin;
         }
-
         public bool CreateFacility(FacilityCreate model)
         {
            var entity =
@@ -109,7 +109,7 @@ namespace inVent.Services
                 var entity =
                     ctx
                     .Facilities
-                    .Single(e => e.FacilityId == model.FacilityId && e.OwnerId == _userId);
+                    .Single(e => e.FacilityId == model.FacilityId && (e.OwnerId == _userId ||  _admin));
                 entity.Name = model.Name;
                 entity.Type = model.Type;
 
@@ -123,8 +123,8 @@ namespace inVent.Services
                 var entity =
                     ctx
                     .Facilities
-                    .Single(e => e.FacilityId == FacilityId && e.OwnerId == _userId);
-                    entity.Closed = DateTimeOffset.Now;
+                    .Single(e => e.FacilityId == FacilityId && (e.OwnerId == _userId ||  _admin));
+                entity.Closed = DateTimeOffset.Now;
 
                 return ctx.SaveChanges() == 1;
             }

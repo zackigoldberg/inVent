@@ -24,7 +24,8 @@ namespace inVent.Web.Controllers
         private FacilityService CreateFacilityService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new FacilityService(userId);
+            var roleId = User.IsInRole("Admin");
+            var service = new FacilityService(userId, roleId);
             return service;
         }
         // GET: Facility/Details/5
@@ -110,7 +111,6 @@ namespace inVent.Web.Controllers
         }
 
         // GET: Facility/Close/5
-
         public ActionResult Close(int id)
         {
             var service = CreateFacilityService();
@@ -118,22 +118,15 @@ namespace inVent.Web.Controllers
             return View(model); 
         }
 
-        // POST: Facility/Close/5
+        // POST: Facility/CloseFacility/5
         [HttpPost]
         [ActionName("Close")]
-        public ActionResult Close(int id, FacilityDetail model)
+        [ValidateAntiForgeryToken]
+        public ActionResult CloseFacility(int id, FacilityDetail model)
         {
             {
-                if (!ModelState.IsValid) return View(model);
-
-                if (model.FacilityId != id)
-                {
-                    ModelState.AddModelError("", "Id Mismatch");
-                    return View(model);
-                }
-
-
                 var service = CreateFacilityService();
+                if (!ModelState.IsValid) return View();
 
                 if (service.CloseFacility(id))
                 {

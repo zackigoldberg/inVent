@@ -1,4 +1,4 @@
-﻿ using inVent.Data;
+﻿using inVent.Data;
 using inVent.Models.FacilityModels;
 using inVent.Models.InventoryModels;
 using inVent.Models.SaleModels;
@@ -30,7 +30,7 @@ namespace inVent.Services
             entity.InventoryId = model.InventoryId;
             entity.Salesman = model.Salesman;
             entity.QuantitySold = model.QuantitySold;
-            
+
             entity = GetSaleTotal(entity);
             using (var ctx = new ApplicationDbContext())
             {
@@ -41,11 +41,11 @@ namespace inVent.Services
                     return ctx.SaveChanges() == 2;
                 }
                 return false;
-                
+
             }
         }
         public IEnumerable<SaleListItem> GetSales()
-        { 
+        {
             using (var ctx = new ApplicationDbContext())
             {
                 var query =
@@ -144,7 +144,7 @@ namespace inVent.Services
         }
         public bool UpdateSale(SaleEdit model)
         {
-            using( var ctx = new ApplicationDbContext())
+            using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
@@ -154,10 +154,15 @@ namespace inVent.Services
                 entity.SaleId = model.SaleId;
                 entity.Salesman = model.Salesman;
                 entity.Inventory = ctx.Inventories.Single(e => e.InventoryId == model.InventoryId);
-                entity.QuantitySold = model.QuantitySold;
-                entity.SaleTotal = model.SaleTotal;
+                if (entity.QuantitySold != model.QuantitySold)
+                {
+                    ctx.Inventories.Single(e => e.InventoryId == model.InventoryId).Quantity -= model.QuantitySold - entity.QuantitySold;
+                    entity= GetSaleTotal(entity);
+                    return ctx.SaveChanges() == 2;
+                }
 
-                return ctx.SaveChanges() == 1;    
+                return ctx.SaveChanges() == 1;
+                
             }
         }
         public bool DeleteSale(int saleId)
@@ -175,7 +180,7 @@ namespace inVent.Services
         }
         private Sale GetSaleTotal(Sale model)
         {
-            using (var ctx = new ApplicationDbContext()) { model.SaleTotal = ctx.Inventories.First(e=>e.InventoryId == model.InventoryId).Price * model.QuantitySold; }
+            using (var ctx = new ApplicationDbContext()) { model.SaleTotal = ctx.Inventories.First(e => e.InventoryId == model.InventoryId).Price * model.QuantitySold; }
 
             return model;
         }
@@ -218,7 +223,7 @@ namespace inVent.Services
                        Quantity = e.Quantity,
                        Price = e.Price
                    }).ToList()
-                   
+
                 };
                 return model;
             }
