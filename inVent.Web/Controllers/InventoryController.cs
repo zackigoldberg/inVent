@@ -15,23 +15,18 @@ namespace inVent.Web.Controllers
     public class InventoryController : Controller
     {
        
+        private InventoryService CreateInventoryService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var roleId = User.IsInRole("Admin");
+            var service = new InventoryService(userId, roleId);
+            return service;
+        }
         // GET: Inventory
         public ActionResult Index()
         {
             var service = CreateInventoryService();
             var model = service.GetAllInventory();
-            return View(model);
-        }
-        private InventoryService CreateInventoryService()
-        {
-            var service = new InventoryService(Guid.Parse(User.Identity.GetUserId()));
-            return service;
-        }
-        // GET: Inventory/Details/
-        public ActionResult Details(int id)
-        {
-            var service = CreateInventoryService();
-            var model = service.GetFacilityInventory(id);
             return View(model);
         }
         
@@ -75,6 +70,13 @@ namespace inVent.Web.Controllers
 
             ModelState.AddModelError("", "Inventory not created.");
 
+            return View(model);
+        }
+        // GET: Inventory/Details/
+        public ActionResult Details(int id)
+        {
+            var service = CreateInventoryService();
+            var model = service.GetFacilityInventory(id);
             return View(model);
         }
 
@@ -127,9 +129,11 @@ namespace inVent.Web.Controllers
         // GET: Inventory/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var service = CreateInventoryService();
+            var model = service.GetInventoryById(id);
+            return View(model);
         }
-
+          
         // POST: Inventory/Delete/5
         [HttpPost]
         [ActionName("Delete")]

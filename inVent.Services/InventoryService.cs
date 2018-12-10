@@ -13,33 +13,14 @@ namespace inVent.Services
     public class InventoryService
     {
         private readonly Guid _userId;
+        private readonly bool _adminId;
 
-        public InventoryService(Guid userId)
+        public InventoryService(Guid userId,bool adminId)
         {
             _userId = userId;
+            _adminId = adminId;
         }
 
-        public List<Facility> Facilities()
-        {
-            using (var ctx = new ApplicationDbContext())
-            {
-                return ctx.Facilities.ToList();
-            }
-        }
-        public List<Item> Items()
-        {
-            using (var ctx = new ApplicationDbContext())
-            {
-                return ctx.Items.ToList();
-            }
-        }
-        public List<Inventory> Inventories()
-        {
-            using (var ctx = new ApplicationDbContext())
-            {
-                return ctx.Inventories.ToList();
-            }
-        }
         public bool CreateInventory(InventoryCreate model)
         {
             var entity = new Inventory();
@@ -78,7 +59,27 @@ namespace inVent.Services
                 return query.ToArray();
             }
         }
-
+        public InventoryDetail GetInventoryById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Inventories
+                    .Single(e => e.InventoryId == id);
+                return
+                    new InventoryDetail
+                    {
+                        FacilityId = entity.FacilityId,
+                        Facility = entity.Facility,
+                        ItemNumber = entity.ItemNumber,
+                        Item = entity.Item,
+                        InventoryId = entity.InventoryId,
+                        QuantitySold = entity.Quantity,
+                        Price = entity.Price
+                    };
+            }
+        }
         public IEnumerable<InventoryAdvancedListItem> GetFacilityInventory(int facilityId)
         {
             using (var ctx = new ApplicationDbContext())
@@ -119,20 +120,24 @@ namespace inVent.Services
 
         public bool EditInventory(InventoryEdit model)
         {
-            using (var ctx = new ApplicationDbContext())
+            if (_adminId)
             {
-                var entity =
-                    ctx
-                    .Inventories
-                    .Single(e => e.InventoryId == model.InventoryId);
+                using (var ctx = new ApplicationDbContext())
+                {
+                    var entity =
+                        ctx
+                        .Inventories
+                        .Single(e => e.InventoryId == model.InventoryId);
 
-                entity.FacilityId = model.FacilityId;
-                entity.ItemNumber = model.ItemNumber;
-                entity.Quantity = model.Quantity;
-                entity.Price = model.Price;
+                    entity.FacilityId = model.FacilityId;
+                    entity.ItemNumber = model.ItemNumber;
+                    entity.Quantity = model.Quantity;
+                    entity.Price = model.Price;
 
-                return ctx.SaveChanges() == 1;
+                    return ctx.SaveChanges() == 1;
+                }
             }
+            return false;
         }
 
         public bool DeleteInventory(int inventoryId)
@@ -142,10 +147,31 @@ namespace inVent.Services
                 var entity =
                     ctx
                     .Inventories
-                    .Single(e => e.InventoryId == inventoryId);
+                    .Single(e => e.InventoryId == inventoryId && _adminId);
                 ctx.Inventories.Remove(entity);
 
                 return ctx.SaveChanges() == 1;
+            }
+        }
+        public List<Facility> Facilities()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                return ctx.Facilities.ToList();
+            }
+        }
+        public List<Item> Items()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                return ctx.Items.ToList();
+            }
+        }
+        public List<Inventory> Inventories()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                return ctx.Inventories.ToList();
             }
         }
     }

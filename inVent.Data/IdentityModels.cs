@@ -70,7 +70,7 @@ namespace inVent.Web.Models
         {
             public IdentityUserRoleConfiguration()
             {
-                HasKey(iur => iur.RoleId);
+                HasKey(iur => iur.UserId);
             }
         }
     }

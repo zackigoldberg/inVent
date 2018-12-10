@@ -96,8 +96,11 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.InventoryId }) |
+                @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President")) 
+                {
+                @Html.ActionLink("Edit", "Edit", new { id = item.InventoryId }) 
                 @Html.ActionLink("Delete", "Delete", new { id = item.InventoryId })
+                }
             </td>
         </tr>
     }

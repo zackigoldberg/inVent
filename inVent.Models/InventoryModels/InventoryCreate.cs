@@ -21,10 +21,15 @@ namespace inVent.Models.InventoryModels
         public int ItemNumber { get; set; }
         public Item Item { get; set; }
         public List<Item> ItemList { get; set; }
+
         [Required]
         [Display(Name = "How many items are there?")]
+        [Range(0,9999999, ErrorMessage ="Please enter a non-negative number.")]
         public int Quantity { get; set; }
+
+
         [Required]
+        [Range(0, 9999999, ErrorMessage = "Please enter a non-negative number.")]
         public decimal Price { get; set; }
     }
 }

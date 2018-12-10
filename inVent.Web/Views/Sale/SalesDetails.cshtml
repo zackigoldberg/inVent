@@ -7,9 +7,17 @@
 <h2>SalesDetails</h2>
 
 <div>
-    <h4>SaleDetail</h4>
+    <h4>Sale Details</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SaleId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SaleId)
+        </dd>
+    
         <dt>
             @Html.DisplayNameFor(model => model.Salesman)
         </dt>
@@ -19,27 +27,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FacilityId)
+            @Html.DisplayNameFor(model => model.Facility)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FacilityId)
+            @Html.DisplayFor(model => model.Facility.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ItemNumber)
+            @Html.DisplayNameFor(model => model.Item)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ItemNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.InventoryId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.InventoryId)
+            @Html.DisplayFor(model => model.Item.Name)
         </dd>
 
         <dt>
@@ -55,20 +55,10 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SaleTotal)
+            $@Html.DisplayFor(model => model.SaleTotal)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SaleId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SaleId)
-        </dd>
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

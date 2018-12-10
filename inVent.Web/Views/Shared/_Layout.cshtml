@@ -5,40 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title inVent the Space Age Baking Company</title>
     @Styles.Render("~/Content/css")
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="~/Content/Site.css">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
     @*Navigation*@
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-fixed-top">
         <div class="container">
+            
+            @Html.Partial("_LoginPartial")
+
+        </div>
+    </div>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+
+            </div>
+            <div class="sidebar-header">
                 @Html.ActionLink("inVent", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Facility", "Index", "Facility")</li>
-                    <li>@Html.ActionLink("Item", "Index", "Item")</li>
-                    <li>@Html.ActionLink("Sales", "Index", "Sale")</li>
-                    <li>@Html.ActionLink("Add Inventory", "Create", "Inventory")</li>
-                    <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
+            <br />
+            <ul class="list-unstyled components">
 
-
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
+                <li class="active">
+                    <a href="#facilitySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Facilities</a>
+                    <ul class="collapse list-unstyled" id="facilitySubmenu">
+                        <li>
+                            @Html.ActionLink("All Facilities", "Index", "Facility")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Create New Facility", "Create", "Facility")
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#itemSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Items</a>
+                    <ul class="collapse list-unstyled" id="itemSubmenu">
+                        <li>
+                            @Html.ActionLink("All Items", "Index", "Item")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Create New Item", "Create", "Item")
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#inventorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Inventories</a>
+                    <ul class="collapse list-unstyled" id="inventorySubmenu">
+                        <li>
+                            @Html.ActionLink("All Inventories", "Index", "Inventory")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Create New Inventory", "Create", "Inventory")
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#saleSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sales</a>
+                    <ul class="collapse list-unstyled" id="saleSubmenu">
+                        <li>
+                            @Html.ActionLink("All Sales", "Index", "Sale")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Create New Sale", "Create", "Sale")
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
     </div>
 
-
     <div class="container body-content">
+
         @RenderBody()
         <hr />
+
         <footer>
             <p>&copy; @DateTime.Now.Year - inVent, the first Intergalactic Bakery</p>
         </footer>
@@ -46,6 +98,13 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

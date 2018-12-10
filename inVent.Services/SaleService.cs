@@ -14,12 +14,13 @@ namespace inVent.Services
     public class SaleService
     {
         private readonly Guid _userId;
+        private readonly bool _adminId;
 
-        public SaleService(Guid userid)
+        public SaleService(Guid userId, bool adminId)
         {
-            _userId = userid;
+            _userId = userId;
+            _adminId = adminId;
         }
-
 
         public bool CreateSale(SaleCreate model)
         {
@@ -151,16 +152,25 @@ namespace inVent.Services
                     .Sales
                     .Single(e => e.SaleId == model.SaleId);
 
+                var inventory =
+                    ctx
+                    .Inventories
+                    .Single(e => e.InventoryId == model.InventoryId);
+
                 entity.SaleId = model.SaleId;
                 entity.Salesman = model.Salesman;
                 entity.Inventory = ctx.Inventories.Single(e => e.InventoryId == model.InventoryId);
                 if (entity.QuantitySold != model.QuantitySold)
                 {
-                    ctx.Inventories.Single(e => e.InventoryId == model.InventoryId).Quantity -= model.QuantitySold - entity.QuantitySold;
-                    entity= GetSaleTotal(entity);
-                    return ctx.SaveChanges() == 2;
+                    var difference = model.QuantitySold - entity.QuantitySold;
+                    if (difference<= inventory.Quantity)
+                    {
+                        inventory.Quantity-=difference;
+                        entity.QuantitySold = model.QuantitySold;
+                        entity = GetSaleTotal(entity);
+                        return ctx.SaveChanges() == 2;
+                    }
                 }
-
                 return ctx.SaveChanges() == 1;
                 
             }
@@ -175,12 +185,13 @@ namespace inVent.Services
                     .Single(e => e.SaleId == saleId);
                 ctx.Sales.Remove(entity);
 
-                return ctx.SaveChanges() == 1;
+                ctx.Inventories.Single(e => e.InventoryId == entity.InventoryId).Quantity += entity.QuantitySold;
+                return ctx.SaveChanges() == 2;
             }
         }
         private Sale GetSaleTotal(Sale model)
         {
-            using (var ctx = new ApplicationDbContext()) { model.SaleTotal = ctx.Inventories.First(e => e.InventoryId == model.InventoryId).Price * model.QuantitySold; }
+            using (var ctx = new ApplicationDbContext()) { model.SaleTotal = (ctx.Inventories.First(e => e.InventoryId == model.InventoryId).Price * model.QuantitySold); }
 
             return model;
         }
