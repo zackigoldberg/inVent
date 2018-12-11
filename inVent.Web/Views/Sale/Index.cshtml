@@ -6,7 +6,7 @@
 
 <h2>Sale List</h2>
 
-<p>
+<p class="create">
     @Html.ActionLink("Create New", "Create")
 </p>
 @if (TempData.ContainsKey("SaveResult"))
@@ -63,7 +63,7 @@
             <td>
                 $@Html.DisplayFor(modelItem => item.SaleTotal)
             </td>
-            <td>
+            <td class="listbuttons"class="listbuttons">
                 @Html.ActionLink("Edit", "Edit", new { id = item.SaleId }) |
                 @Html.ActionLink("Details", "SalesDetails", new { id = item.SaleId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.SaleId })

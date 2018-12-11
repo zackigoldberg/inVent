@@ -49,28 +49,31 @@
         </tr>
         @foreach (var inventory in Model.Inventories)
         {
-            
-                <tr>
-                    <td></td>
-                    <td>
-                        @inventory.Item.Name
-                    </td>
-                    <td>
-                        @inventory.Item.PackSize
-                    </td>
-                    <td>
-                        @inventory.Quantity
-                    </td>
-                    <td>
-                        $@inventory.Price
-                    </td>
-                </tr>
-            
+
+            <tr>
+                <td></td>
+                <td>
+                    @inventory.Item.Name
+                </td>
+                <td>
+                    @inventory.Item.PackSize
+                </td>
+                <td>
+                    @inventory.Quantity
+                </td>
+                <td>
+                    $@inventory.Price
+                </td>
+            </tr>
+
         }
     </table>
 }
 @if (Model.Sales != null)
 {
+
+
+
     <h3>Sales made from this Facility</h3>
     <table class="table">
         <tr>
@@ -84,33 +87,34 @@
         </tr>
         @foreach (var sales in Model.Sales)
         {
-                <tr>
-                    <td></td>
-                    <td>
-                        @sales.Salesman
-                    </td>
-                    <td>
-                        @sales.Inventory.Item.Name
-                    </td>
-                    <td>
-                        @sales.Inventory.Item.PackSize
-                    </td>
-                    <td>
-                        @sales.QuantitySold
-                    </td>
-                    <td>
-                        $@sales.Inventory.Price
-                    </td>
-                    <td>
-                        $@sales.SaleTotal
-                    </td>
-                </tr>
+            <tr>
+                <td></td>
+                <td>
+                    @sales.Salesman
+                </td>
+                <td>
+                    @sales.Inventory.Item.Name
+                </td>
+                <td>
+                    @sales.Inventory.Item.PackSize
+                </td>
+                <td>
+                    @sales.QuantitySold
+                </td>
+                <td>
+                    $@sales.Inventory.Price
+                </td>
+                <td>
+                    $@sales.SaleTotal
+                </td>
+            </tr>
         }
     </table>
 }
 
 
-<p>
+<p  class="details">
     @Html.ActionLink("Edit Facility Information", "Edit", new { id = Model.FacilityId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+

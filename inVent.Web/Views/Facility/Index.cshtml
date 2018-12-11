@@ -6,7 +6,7 @@
 
 <h2>Index</h2>
 
-<p>
+<p class="create">
  @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
@@ -46,7 +46,7 @@
         <td>
             @Html.ActionLink("See Items", "Details", "Inventory", new { id= item.FacilityId }, null)
         </td>
-        <td>
+        <td  class="listbuttons">
             @Html.ActionLink("Edit", "Edit", new {  id=item.FacilityId  }) |
             @Html.ActionLink("Details", "Details",  new {  id=item.FacilityId  }) |
             @Html.ActionLink("Close", "Close", new {  id=item.FacilityId })

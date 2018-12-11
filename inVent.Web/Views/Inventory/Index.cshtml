@@ -8,7 +8,7 @@
 
 <h2>Index</h2>
 
-<p>
+<p  class="create">
     @Html.ActionLink("Create New", "Create")
 </p>
 @if (TempData.ContainsKey("SaveResult"))
@@ -95,7 +95,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
+            <td class="listbuttons">
                 @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President")) 
                 {
                 @Html.ActionLink("Edit", "Edit", new { id = item.InventoryId }) 

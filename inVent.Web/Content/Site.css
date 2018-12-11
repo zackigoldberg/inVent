@@ -99,13 +99,13 @@ a, a:hover, a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    font-size:large;
-    background:rgba(5, 115, 235, 0.94);
+    font-size:80px;
+    background: rgba(5, 115, 235, 0.94);
 }
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid rgba(5, 115, 235, 0.96);
+    border-bottom: rgba(5, 115, 235, 0.94);
 }
 
 #sidebar ul p {
@@ -126,11 +126,55 @@ a, a:hover, a:focus {
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    background: rgba(5, 115, 235, 0.96);
+    background: rgba(5, 115, 235, 0.94);
 }
 
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: rgba(5, 115, 235, 0.96);
+    background: rgba(5, 115, 235, 0.94);
+}
+
+#loginbuttons {
+    background: rgba(5, 115, 235, 0.94);
+    border-radius: 20px;
+    text-align: right;
+    color: snow;
+}
+#loginbuttons:hover{
+    cursor: pointer;
+}
+
+#loginbuttons2 {
+    background: rgba(5, 115, 235, 0.94);
+    border-radius: 20px;
+    text-align: right;
+    color: snow;
+}
+#invent {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 85px;
+}
+.create {
+    background: rgba(5, 115, 235, 0.94);
+    border-radius: 20px;
+    color: snow;
+    width: 120px ;
+    text-align: center;
+}
+.listbuttons {
+    background: rgba(5, 115, 235, 0.94);
+    border-radius: 10px;
+    height:10px;
+    width: 15%;
+    color: snow;
+    text-align: center;
+}
+.details {
+    background: rgba(5, 115, 235, 0.94);
+    border-radius: 10px;
+    height: 25px;
+    width: 25%;
+    color: snow;
+    text-align: center;
 }
