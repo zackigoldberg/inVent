@@ -26,8 +26,9 @@ textarea {
 
 .jumbotron {
     background: url('https://images.unsplash.com/photo-1533782654613-826a072dd6f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80');
-    color:ghostwhite;
+    color: ghostwhite;
     text-align: center;
+    font-family: 'Fjalla One', sans-serif;
 }
 
 .lead {
@@ -79,12 +80,21 @@ a[data-toggle="collapse"] {
 
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: sans-serif;
     background: #dedddd;
 }
 
+h2 {
+    font-family: 'Fjalla One', sans-serif;
+}
+th {
+    font-family: 'Fjalla One', sans-serif;
+}
+td {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
 p {
-    font-family: 'Poppins', sans-serif;
+    font-family: sans-serif;
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
@@ -143,6 +153,7 @@ ul ul a {
 }
 #loginbuttons:hover{
     cursor: pointer;
+    border-radius: 20px;
 }
 
 #loginbuttons2 {
