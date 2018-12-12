@@ -97,7 +97,6 @@ namespace inVent.Web.Controllers
                     Quantity = model.Quantity,
                     Price = model.Price
                 };
-
             return View(editor);
         }
 
@@ -140,17 +139,16 @@ namespace inVent.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, InventoryDetail model)
         {
-            if (!ModelState.IsValid) return View(model);
-
+      
             var service = CreateInventoryService();
 
             if (service.DeleteInventory(id))
             {
-                TempData["SaveResult"] = "Inventory was created.";
+                TempData["SaveResult"] = "Inventory was deleted.";
                 return RedirectToAction("Index");
             }
 
-            ModelState.AddModelError("", "Inventory not created.");
+            ModelState.AddModelError("", "Inventory not deleted.");
 
             return View(model);
         }

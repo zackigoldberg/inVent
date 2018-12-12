@@ -172,18 +172,9 @@ namespace inVent.Web.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, SaleDetail model)
+        public ActionResult SaleDelete(int id, SaleDetail model)
         {
-            if (!ModelState.IsValid) return View(model);
-
-            if (model.SaleId != id)
-            {
-                ModelState.AddModelError("", "Id Mismatch");
-                return View(model);
-            }
-
-
-            var service = CreateSaleService();
+                        var service = CreateSaleService();
 
             if (service.DeleteSale(id))
             {

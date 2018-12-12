@@ -11,6 +11,7 @@
     <h4>SaleDetail</h4>
     <hr />
     <dl class="dl-horizontal">
+        @Html.HiddenFor(model => model.SaleId)
         <dt>
             @Html.DisplayNameFor(model => model.Salesman)
         </dt>
@@ -61,8 +62,17 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.InventoryId)
+        @Html.HiddenFor(model => model.Item)
+        @Html.HiddenFor(model => model.ItemNumber)
+        @Html.HiddenFor(model => model.Facility)
+        @Html.HiddenFor(model => model.FacilityId)
+        @Html.HiddenFor(model => model.QuantitySold)
+        @Html.HiddenFor(model => model.SaleTotal)
+        @Html.HiddenFor(model => model.SaleId)
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |

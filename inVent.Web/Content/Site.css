@@ -44,7 +44,7 @@ textarea {
     width: 250px;
     position: fixed;
     top: 0;
-    left: 0;
+    left: -250px;
     height: 100vh;
     z-index: 999;
     background: rgba(5, 115, 235, 0.94);
@@ -53,7 +53,7 @@ textarea {
 }
 
     #sidebar.active {
-        margin-left: -250px;
+        margin-left: 250px;
     }
 
 a[data-toggle="collapse"] {
