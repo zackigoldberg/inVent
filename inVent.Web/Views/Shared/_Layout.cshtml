@@ -38,10 +38,16 @@
                         <li>
                             @Html.ActionLink("All Facilities", "Index", "Facility")
                         </li>
-                        <li>
-                            @Html.ActionLink("Create New Facility", "Create", "Facility")
-                        </li>
-                    </ul>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+                        {
+                            <li>
+                                @Html.ActionLink("Create New Facility", "Create", "Facility")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Closed Facilities", "ClosedFacilitiesList", "Facility")
+                            </li>
+                        }
+                        </ul>
                 </li>
                 <li class="active">
                     <a href="#itemSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Items</a>
@@ -49,10 +55,13 @@
                         <li>
                             @Html.ActionLink("All Items", "Index", "Item")
                         </li>
-                        <li>
-                            @Html.ActionLink("Create New Item", "Create", "Item")
-                        </li>
-                    </ul>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+                        {
+                            <li>
+                                @Html.ActionLink("Create New Item", "Create", "Item")
+                            </li>
+                        }
+                        </ul>
                 </li>
                 <li class="active">
                     <a href="#inventorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Inventories</a>
@@ -60,10 +69,13 @@
                         <li>
                             @Html.ActionLink("All Inventories", "Index", "Inventory")
                         </li>
-                        <li>
-                            @Html.ActionLink("Create New Inventory", "Create", "Inventory")
-                        </li>
-                    </ul>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+                        {
+                            <li>
+                                @Html.ActionLink("Create New Inventory", "Create", "Inventory")
+                            </li>
+                        }
+                        </ul>
                 </li>
                 <li class="active">
                     <a href="#saleSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sales</a>

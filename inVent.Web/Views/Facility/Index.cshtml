@@ -6,9 +6,12 @@
 
 <h2>Index</h2>
 
-<p class="create">
- @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+{
+    <p class="create">
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -26,45 +29,45 @@
         <th>
             @Html.DisplayNameFor(model => model.Items)
         </th>
-        <th></th>
-    </tr>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FacilityId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Opened.Date)
-        </td>
-        <td>
-            @Html.ActionLink("See Items", "Details", "Inventory", new { id= item.FacilityId }, null)
-        </td>
-        <td class="listbuttons">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacilityId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opened.Date)
+            </td>
+            <td>
+                @Html.ActionLink("See Items", "Details", "Inventory", new { id = item.FacilityId }, null)
+            </td>
             @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
             {
-                @Html.ActionLink("Edit", "Edit", new { id = item.FacilityId })
+                <td class="listbuttons">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.FacilityId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.FacilityId }) |
+                    @Html.ActionLink("Close", "Close", new { id = item.FacilityId })
+                </td>
             }
-            |
-            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+            else
             {
-                @Html.ActionLink("Details", "Details", new { id = item.FacilityId }) 
+                <td class="listbuttons">
+                    @Html.ActionLink("Details", "Details", new { id = item.FacilityId})
+                </td>
             }
-            |
-            @if (User.IsInRole("Admin") ||  User.IsInRole("President"))
-            {
-                @Html.ActionLink("Close", "Close", new { id = item.FacilityId })
-            }
-        </td>
-    </tr>
-}
+
+        </tr>
+    }
 
 </table>
 
-@Html.ActionLink("See Closed Facilities","ClosedFacilitiesList")
+@Html.ActionLink("See Closed Facilities", "ClosedFacilitiesList")

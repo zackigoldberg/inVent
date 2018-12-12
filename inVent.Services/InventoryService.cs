@@ -75,7 +75,7 @@ namespace inVent.Services
                         ItemNumber = entity.ItemNumber,
                         Item = entity.Item,
                         InventoryId = entity.InventoryId,
-                        QuantitySold = entity.Quantity,
+                        Quantity = entity.Quantity,
                         Price = entity.Price
                     };
             }

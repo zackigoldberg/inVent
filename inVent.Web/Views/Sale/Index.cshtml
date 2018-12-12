@@ -39,8 +39,11 @@
         <th>
             @Html.DisplayNameFor(model => model.SaleTotal)
         </th>
-        <th></th>
-    </tr>
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+        {
+            <th></th>
+        }
+        </tr>
 
     @foreach (var item in Model)
     {
@@ -63,27 +66,14 @@
         <td>
             $@Html.DisplayFor(modelItem => item.SaleTotal)
         </td>
-
-        <td class="listbuttons">
-            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = item.SaleId })
-            }
-            |
-            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
-            {
-
-                @Html.ActionLink("Details", "SalesDetails", new { id = item.SaleId })
-            }
-            |
-            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
-            {
-
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+        {
+            <td class="listbuttons">
+                @Html.ActionLink("Edit", "Edit", new { id = item.SaleId }) |
+                @Html.ActionLink("Details", "SalesDetails", new { id = item.SaleId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.SaleId })
-            }
-        </td>|
-       |
-    
-    </tr>
-    }
+            </td>
+        }
+   </tr>
+        }
 </table>

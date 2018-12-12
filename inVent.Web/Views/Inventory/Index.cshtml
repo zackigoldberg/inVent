@@ -1,16 +1,19 @@
 ﻿@model IEnumerable<inVent.Models.InventoryModels.InventoryListItem>
 
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Index";
+    ViewBag.Title = "Index";
 }
 
 <h2>Inventory Index</h2>
 
-<p  class="create">
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+{
+    <p class="create">
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 @if (TempData.ContainsKey("SaveResult"))
 {
     <div class="alert-success" role="alert">
@@ -71,18 +74,13 @@
             <td>
                 $@Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td class="listbuttons">
-                @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
-                {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.InventoryId });
-                }
-                |
-                @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
-                {
-
-                    @Html.ActionLink("Delete", "Delete", new { id = item.InventoryId });
-                }
-            </td>
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+            {
+                <td class="listbuttons">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.InventoryId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.InventoryId })
+                </td>
+            }
         </tr>
     }
 

@@ -113,8 +113,12 @@
 }
 
 
-<p  class="details">
-    @Html.ActionLink("Edit Facility Information", "Edit", new { id = Model.FacilityId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    <p class="details">
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+        {
+            @Html.ActionLink("Edit Facility Information", "Edit", new { id = Model.FacilityId })
+        }
+     
+            @Html.ActionLink("Back to List", "Index")
+        </p>
 
