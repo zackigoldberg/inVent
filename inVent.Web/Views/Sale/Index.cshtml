@@ -44,30 +44,46 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salesman)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Inventory.Facility.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Inventory.Item.Name)
-            </td>
-            <td>
-                $@Html.DisplayFor(modelItem => item.Inventory.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuantitySold)
-            </td>
-            <td>
-                $@Html.DisplayFor(modelItem => item.SaleTotal)
-            </td>
-            <td class="listbuttons"class="listbuttons">
-                @Html.ActionLink("Edit", "Edit", new { id = item.SaleId }) |
-                @Html.ActionLink("Details", "SalesDetails", new { id = item.SaleId }) |
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Salesman)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inventory.Facility.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inventory.Item.Name)
+        </td>
+        <td>
+            $@Html.DisplayFor(modelItem => item.Inventory.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuantitySold)
+        </td>
+        <td>
+            $@Html.DisplayFor(modelItem => item.SaleTotal)
+        </td>
+
+        <td class="listbuttons">
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.SaleId })
+            }
+            |
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+            {
+
+                @Html.ActionLink("Details", "SalesDetails", new { id = item.SaleId })
+            }
+            |
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+            {
+
                 @Html.ActionLink("Delete", "Delete", new { id = item.SaleId })
-            </td>
-        </tr>
+            }
+        </td>|
+       |
+    
+    </tr>
     }
 </table>

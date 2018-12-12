@@ -41,10 +41,21 @@
             @Html.DisplayFor(modelItem => item.PackSize)
         </td>
         <td class="listbuttons">
-            @Html.ActionLink("Edit", "Edit", new {  id=item.ItemNumber  }) |
-            @Html.ActionLink("Details", "Display", new {  id=item.ItemNumber }) |
-            @Html.ActionLink("Delete", "Delete", new {  id=item.ItemNumber  })
-        </td>
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.ItemNumber })
+            }
+            |
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+            {
+                @Html.ActionLink("Details", "Display", new { id = item.ItemNumber })
+            }
+            |
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+            {
+                @Html.ActionLink("Delete", "Delete", new { id = item.ItemNumber })
+            }
+            </td>
     </tr>
 }
 

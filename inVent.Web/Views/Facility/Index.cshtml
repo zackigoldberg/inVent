@@ -46,10 +46,21 @@
         <td>
             @Html.ActionLink("See Items", "Details", "Inventory", new { id= item.FacilityId }, null)
         </td>
-        <td  class="listbuttons">
-            @Html.ActionLink("Edit", "Edit", new {  id=item.FacilityId  }) |
-            @Html.ActionLink("Details", "Details",  new {  id=item.FacilityId  }) |
-            @Html.ActionLink("Close", "Close", new {  id=item.FacilityId })
+        <td class="listbuttons">
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.FacilityId })
+            }
+            |
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+            {
+                @Html.ActionLink("Details", "Details", new { id = item.FacilityId }) 
+            }
+            |
+            @if (User.IsInRole("Admin") ||  User.IsInRole("President"))
+            {
+                @Html.ActionLink("Close", "Close", new { id = item.FacilityId })
+            }
         </td>
     </tr>
 }
