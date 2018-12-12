@@ -1,14 +1,14 @@
-﻿@model inVent.Models.FacilityModels.FacilityDetail
+﻿@model inVent.Web.Controllers.InventoryDetail
 
 @{
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Delete Inventoried Item</h2>
+
 <h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>FacilityDetail</h4>
-    @if (TempData.ContainsKey("SaveResult"))
+<div
+     @if (TempData.ContainsKey("SaveResult"))
     {
         <div class="alert-danger" role="alert">
             @ViewBag.SaveResult
@@ -17,45 +17,46 @@
             </button>
             @TempData["SaveResult"]
         </div>
-    }
+    }>
+    <h4></h4>
     <hr />
     <dl class="dl-horizontal">
+        @Html.HiddenFor(model=> model.InventoryId)
         <dt>
-            @Html.DisplayNameFor(model => model.FacilityId)
+            @Html.DisplayNameFor(model => model.Facility.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FacilityId)
+            @Html.DisplayFor(model => model.Facility.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Item.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Item.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Opened)
+            @Html.DisplayNameFor(model => model.Quantity)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Opened)
+            @Html.DisplayFor(model => model.Quantity)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Closed)
+            @Html.DisplayNameFor(model => model.Price)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Closed)
+            @Html.DisplayFor(model => model.Price)
         </dd>
 
     </dl>
 
-    @using (Html.BeginForm())
-    {
+    @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

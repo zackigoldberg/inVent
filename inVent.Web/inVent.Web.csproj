@@ -269,13 +269,13 @@
     <Content Include="Views\Sale\Edit.cshtml" />
     <Content Include="Views\Sale\Delete.cshtml" />
     <Content Include="Views\Sale\SalesDetails.cshtml" />
-    <Content Include="Views\Inventory\Delete.cshtml" />
     <Content Include="Views\Inventory\Edit.cshtml" />
     <Content Include="Views\Sale\Create.cshtml" />
     <Content Include="Views\Facility\ClosedFacilitiesList.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTimeOffset.cshtml" />
+    <Content Include="Views\Inventory\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdminPages\" />

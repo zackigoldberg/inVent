@@ -10,6 +10,7 @@ namespace inVent.Models.FacilityModels
 {
     public class FacilityListItem
     {
+        [Display(Name= "Facility Id")]
         public int FacilityId { get; set; }
 
         public string Name { get; set; }

@@ -9,6 +9,7 @@ namespace inVent.Models.ItemModels
 {
     public class ItemDetail
     {
+        [Display(Name = "Item Number")]
         public int ItemNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
