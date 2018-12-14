@@ -223,7 +223,7 @@ namespace inVent.Services
                 var model =
                 new SaleCreate
                 {
-                    Inventories = ctx.Inventories.Select(e =>
+                    Inventories = ctx.Inventories.Where( e=> e.Quantity > 0).Select(e =>
                    new InventoryListItem
                    {
                        InventoryId = e.InventoryId,

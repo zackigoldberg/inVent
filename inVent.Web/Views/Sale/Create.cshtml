@@ -5,7 +5,16 @@
 }
 
 <h2>New Sale</h2>
-
+@if (TempData.ContainsKey("SaveResult"))
+{
+    <div class="alert-danger" role="alert">
+        @ViewBag.SaveResult
+        <button type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+        @TempData["SaveResult"]
+    </div>
+}
 @if (Model.Inventories != null)
 {
     <h3>Inventories Available</h3>
@@ -22,7 +31,7 @@
         {
 
             <tr>
-                <td></td> 
+                <td></td>
                 <td>
                     @inventory.Facility.Name
                 </td>
@@ -47,7 +56,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    @Html.HiddenFor(model => model.Inventories)
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

@@ -56,10 +56,18 @@ namespace inVent.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(SaleCreate model)
         {
-            if (!ModelState.IsValid) return View(model);
-
+            if (!ModelState.IsValid)
+            {
+                TempData["SaveResult"] = "Sale could not be created: sale exceeds available inventory, please try again.";
+                return RedirectToAction("Index");
+            }
             var service = CreateSaleService();
+            var itemList = new SelectList(service.Items(), "ItemNumber", "Name");
+            var facilityList = new SelectList(service.Facilities(), "FacilityID", "Name");
 
+            ViewBag.ItemNumber = itemList;
+            ViewBag.FacilityId = facilityList;
+            
             var entity = service.Inventories().FirstOrDefault(e => e.FacilityId == model.FacilityId && e.ItemNumber == model.ItemNumber);
             if (entity != null)
             {
