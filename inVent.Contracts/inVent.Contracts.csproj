@@ -54,7 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICommand.cs" />
+    <Compile Include="IFacility.cs" />
+    <Compile Include="IInventory.cs" />
+    <Compile Include="IItem.cs" />
+    <Compile Include="ISale.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +67,12 @@
   <ItemGroup>
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\inVent.Models\inVent.Models.csproj">
+      <Project>{04EA4F65-D1C4-490E-AAC7-5177FFC13C66}</Project>
+      <Name>inVent.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

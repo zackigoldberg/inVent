@@ -1,4 +1,5 @@
-﻿using inVent.Data;
+﻿using inVent.Contracts;
+using inVent.Data;
 using inVent.Models.InventoryModels;
 using inVent.Web.Controllers;
 using inVent.Web.Models;
@@ -8,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace inVent.Services
+namespace inVent.Services 
 {
-    public class InventoryService
+    public class InventoryService : IInventory
     {
         private readonly Guid _userId;
         private readonly bool _adminId;

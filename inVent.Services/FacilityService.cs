@@ -1,4 +1,5 @@
-﻿using inVent.Data;
+﻿using inVent.Contracts;
+using inVent.Data;
 using inVent.Models.FacilityModels;
 using inVent.Models.InventoryModels;
 using inVent.Models.SaleModels;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace inVent.Services
 {
-    public class FacilityService
+    public class FacilityService : IFacility
     {
         private readonly Guid _userId;
         private readonly bool _admin;

@@ -61,6 +61,10 @@
     <Compile Include="SaleService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\inVent.Contracts\inVent.Contracts.csproj">
+      <Project>{AE08CC72-397D-48D3-82C3-56C5ED93CC72}</Project>
+      <Name>inVent.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\inVent.Data\inVent.Data.csproj">
       <Project>{2879c41c-3d15-43fb-af49-08b78094f0c0}</Project>
       <Name>inVent.Data</Name>

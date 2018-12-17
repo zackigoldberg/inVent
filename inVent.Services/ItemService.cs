@@ -1,4 +1,5 @@
-﻿using inVent.Data;
+﻿using inVent.Contracts;
+using inVent.Data;
 using inVent.Models.ItemModels;
 using inVent.Web.Models;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace inVent.Services
 {
-    public class ItemService
+    public class ItemService : IItem
     {
         private readonly Guid _userId;
 

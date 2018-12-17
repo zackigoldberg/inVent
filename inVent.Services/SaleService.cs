@@ -1,4 +1,5 @@
-﻿using inVent.Data;
+﻿using inVent.Contracts;
+using inVent.Data;
 using inVent.Models.FacilityModels;
 using inVent.Models.InventoryModels;
 using inVent.Models.SaleModels;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace inVent.Services
 {
-    public class SaleService
+    public class SaleService : ISale
     {
         private readonly Guid _userId;
         private readonly bool _adminId;
@@ -181,6 +182,7 @@ namespace inVent.Services
             {
                 var entity =
                     ctx
+                    .Sales
                     .Sales
                     .Single(e => e.SaleId == saleId);
                 ctx.Sales.Remove(entity);
