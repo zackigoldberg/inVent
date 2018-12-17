@@ -10,6 +10,25 @@
     <h4>Change your account settings</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>User Role:</dt>
+        <dd>
+            @if (User.IsInRole("Admin"))
+            {
+                <h6>Admin</h6>
+            } 
+            @if (User.IsInRole("Sales Manager"))
+            {
+                <h6>Sales Manager</h6>
+            } 
+            @if (User.IsInRole("President"))
+            {
+                <h6>President</h6>
+            }
+            @if (User.IsInRole("Salesman"))
+            {
+                <h6>Salesman</h6>
+            }
+        </dd>
         <dt>Password:</dt>
         <dd>
             [

@@ -11,7 +11,7 @@ namespace inVent.Contracts
 {
     public interface IFacility
     {
-       bool CreateFacility(FacilityCreate model);
+        bool CreateFacility(FacilityCreate model);
         IEnumerable<FacilityListItem> GetFacilities();
         IEnumerable<FacilityListItem> GetClosedFacilities();
         FacilityDetail GetFacilityById(int facilityId);

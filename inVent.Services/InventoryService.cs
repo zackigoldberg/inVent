@@ -14,12 +14,13 @@ namespace inVent.Services
     public class InventoryService : IInventory
     {
         private readonly Guid _userId;
-        private readonly bool _adminId;
-
-        public InventoryService(Guid userId,bool adminId)
+        private readonly bool _admin;
+        private readonly bool _manager;
+        public InventoryService(Guid userId, bool admin, bool manager)
         {
             _userId = userId;
-            _adminId = adminId;
+            _admin = admin;
+            _manager = manager;
         }
 
         public bool CreateInventory(InventoryCreate model)
@@ -121,7 +122,7 @@ namespace inVent.Services
 
         public bool EditInventory(InventoryEdit model)
         {
-            if (_adminId)
+            if (_admin || _manager)
             {
                 using (var ctx = new ApplicationDbContext())
                 {
@@ -148,7 +149,7 @@ namespace inVent.Services
                 var entity =
                     ctx
                     .Inventories
-                    .Single(e => e.InventoryId == inventoryId && _adminId);
+                    .Single(e => e.InventoryId == inventoryId && (_admin || _manager));
                 ctx.Inventories.Remove(entity);
 
                 return ctx.SaveChanges() == 1;

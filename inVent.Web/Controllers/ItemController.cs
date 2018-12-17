@@ -120,7 +120,9 @@ namespace inVent.Web.Controllers
         private ItemService CreateItemService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new ItemService(userId);
+            var roleId = User.IsInRole("Admin");
+            var manager = User.IsInRole("Sales Manager");
+            var service = new ItemService(userId, roleId, manager);
             return service;
         }
     }

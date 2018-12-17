@@ -39,7 +39,7 @@
                         <li>
                             @Html.ActionLink("All Facilities", "Index", "Facility")
                         </li>
-                        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+                        @if (User.IsInRole("Admin") || User.IsInRole("Sales Manager") || User.IsInRole("President"))
                         {
                             <li>
                                 @Html.ActionLink("Create New Facility", "Create", "Facility")
@@ -56,7 +56,7 @@
                         <li>
                             @Html.ActionLink("All Items", "Index", "Item")
                         </li>
-                        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+                        @if (User.IsInRole("Admin") || User.IsInRole("Sales Manager") || User.IsInRole("President"))
                         {
                             <li>
                                 @Html.ActionLink("Create New Item", "Create", "Item")
@@ -70,7 +70,7 @@
                         <li>
                             @Html.ActionLink("All Inventories", "Index", "Inventory")
                         </li>
-                        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("President"))
+                        @if (User.IsInRole("Admin") || User.IsInRole("Sales Manager") || User.IsInRole("President"))
                         {
                             <li>
                                 @Html.ActionLink("Create New Inventory", "Create", "Inventory")

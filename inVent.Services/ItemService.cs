@@ -13,15 +13,19 @@ namespace inVent.Services
     public class ItemService : IItem
     {
         private readonly Guid _userId;
-
-        public ItemService(Guid userId)
+        private readonly bool _admin;
+        private readonly bool _manager;
+        public ItemService(Guid userId, bool admin, bool manager)
         {
             _userId = userId;
+            _admin = admin;
+            _manager = manager;
         }
-
         public bool CreateItem(ItemCreate model)
         {
-            var entity =
+            if (_manager || _admin)
+            {
+                var entity =
                 new Item()
                 {
                     Name = model.Name,
@@ -29,11 +33,13 @@ namespace inVent.Services
                     PackSize = model.PackSize
                 };
 
-            using (var ctx = new ApplicationDbContext())
-            {
-                ctx.Items.Add(entity);
-                return ctx.SaveChanges() == 1;
+                using (var ctx = new ApplicationDbContext())
+                {
+                    ctx.Items.Add(entity);
+                    return ctx.SaveChanges() == 1;
+                }
             }
+            return false;
         }
 
         public IEnumerable<ItemListItem> GetItems()
@@ -84,7 +90,7 @@ namespace inVent.Services
                 var entity =
                     ctx
                     .Items
-                    .Single(e => e.ItemNumber == model.ItemNumber);
+                    .Single(e => e.ItemNumber == model.ItemNumber && (_manager || _admin));
                 entity.Name = model.Name;
                 entity.Description = model.Description;
                 entity.PackSize = model.PackSize;
@@ -100,7 +106,7 @@ namespace inVent.Services
                 var entity =
                     ctx
                     .Items
-                    .Single(e => e.ItemNumber == itemNumber);
+                    .Single(e => e.ItemNumber == itemNumber && (_manager || _admin));
                 ctx.Items.Remove(entity);
 
 

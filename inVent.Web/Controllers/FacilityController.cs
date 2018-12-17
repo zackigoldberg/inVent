@@ -24,8 +24,9 @@ namespace inVent.Web.Controllers
         private FacilityService CreateFacilityService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
-            var roleId = User.IsInRole("Admin");
-            var service = new FacilityService(userId, roleId);
+            var role = User.IsInRole("Admin");
+            var manager = User.IsInRole("Sales Manager");
+            var service = new FacilityService(userId, role, manager);
             return service;
         }
         // GET: Facility/Details/5

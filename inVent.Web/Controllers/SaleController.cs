@@ -197,7 +197,8 @@ namespace inVent.Web.Controllers
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
             var roleId = User.IsInRole("Admin");
-            var service = new SaleService(userId, roleId);
+            var manager = User.IsInRole("Sales Manager");
+            var service = new SaleService(userId, roleId, manager);
             return service;
         }
     }

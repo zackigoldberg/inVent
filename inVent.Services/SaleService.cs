@@ -15,12 +15,13 @@ namespace inVent.Services
     public class SaleService : ISale
     {
         private readonly Guid _userId;
-        private readonly bool _adminId;
-
-        public SaleService(Guid userId, bool adminId)
+        private readonly bool _admin;
+        private readonly bool _manager;
+        public SaleService(Guid userId, bool admin, bool manager)
         {
             _userId = userId;
-            _adminId = adminId;
+            _admin = admin;
+            _manager = manager;
         }
 
         public bool CreateSale(SaleCreate model)
@@ -146,49 +147,56 @@ namespace inVent.Services
         }
         public bool UpdateSale(SaleEdit model)
         {
-            using (var ctx = new ApplicationDbContext())
+            if (_manager || _admin)
             {
-                var entity =
-                    ctx
-                    .Sales
-                    .Single(e => e.SaleId == model.SaleId);
-
-                var inventory =
-                    ctx
-                    .Inventories
-                    .Single(e => e.InventoryId == model.InventoryId);
-
-                entity.SaleId = model.SaleId;
-                entity.Salesman = model.Salesman;
-                entity.Inventory = ctx.Inventories.Single(e => e.InventoryId == model.InventoryId);
-                if (entity.QuantitySold != model.QuantitySold)
+                using (var ctx = new ApplicationDbContext())
                 {
-                    var difference = model.QuantitySold - entity.QuantitySold;
-                    if (difference<= inventory.Quantity)
+                    var entity =
+                        ctx
+                        .Sales
+                        .Single(e => e.SaleId == model.SaleId);
+
+                    var inventory =
+                        ctx
+                        .Inventories
+                        .Single(e => e.InventoryId == model.InventoryId);
+
+                    entity.SaleId = model.SaleId;
+                    entity.Salesman = model.Salesman;
+                    entity.Inventory = ctx.Inventories.Single(e => e.InventoryId == model.InventoryId);
+                    if (entity.QuantitySold != model.QuantitySold)
                     {
-                        inventory.Quantity-=difference;
-                        entity.QuantitySold = model.QuantitySold;
-                        entity = GetSaleTotal(entity);
-                        return ctx.SaveChanges() == 2;
+                        var difference = model.QuantitySold - entity.QuantitySold;
+                        if (difference <= inventory.Quantity)
+                        {
+                            inventory.Quantity -= difference;
+                            entity.QuantitySold = model.QuantitySold;
+                            entity = GetSaleTotal(entity);
+                            return ctx.SaveChanges() == 2;
+                        }
                     }
+                    return ctx.SaveChanges() == 1;
                 }
-                return ctx.SaveChanges() == 1;
-                
             }
+            return false;
         }
         public bool DeleteSale(int saleId)
         {
-            using (var ctx = new ApplicationDbContext())
+            if (_manager || _admin)
             {
-                var entity =
-                    ctx
-                    .Sales
-                    .Single(e => e.SaleId == saleId);
-                ctx.Sales.Remove(entity);
+                using (var ctx = new ApplicationDbContext())
+                {
+                    var entity =
+                        ctx
+                        .Sales
+                        .Single(e => e.SaleId == saleId);
+                    ctx.Sales.Remove(entity);
 
-                ctx.Inventories.Single(e => e.InventoryId == entity.InventoryId).Quantity += entity.QuantitySold;
-                return ctx.SaveChanges() == 2;
+                    ctx.Inventories.Single(e => e.InventoryId == entity.InventoryId).Quantity += entity.QuantitySold;
+                    return ctx.SaveChanges() == 2;
+                }
             }
+            return false;
         }
         private Sale GetSaleTotal(Sale model)
         {
