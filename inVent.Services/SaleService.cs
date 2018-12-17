@@ -183,7 +183,6 @@ namespace inVent.Services
                 var entity =
                     ctx
                     .Sales
-                    .Sales
                     .Single(e => e.SaleId == saleId);
                 ctx.Sales.Remove(entity);
 
